@@ -1,0 +1,21 @@
+{
+  "name": "Pinto y La Tenería - Guía Territorial",
+  "short_name": "Guía Pinto",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#006a58",
+  "description": "Guía territorial, comunitaria y educativa de Pinto y el barrio de La Tenería.",
+  "icons": [
+    {
+      "src": "assets/images/torre-eboli.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/torre-eboli.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

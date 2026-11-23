@@ -1,0 +1,205 @@
+/* ==========================================================================
+   GUÍA TERRITORIAL Y COMUNITARIA: PINTO Y LA TENERÍA
+   Design System & Styling inspired by Google Stitch UI Canvas
+   ========================================================================== */
+
+:root {
+  --color-brand-primary: #006a58;
+  --color-brand-primary-hover: #005244;
+  --color-brand-primary-light: #e6f4f1;
+  --color-brand-dark: #004237;
+  --color-accent-amber: #d97706;
+  --color-accent-orange: #ea580c;
+  --color-accent-blue: #0284c7;
+  
+  --color-bg-base: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-border-card: #e2e8f0;
+  
+  --color-text-title: #0f172a;
+  --color-text-body: #334155;
+  --color-text-muted: #64748b;
+  --color-text-subtle: #94a3b8;
+  
+  --radius-card: 16px;
+  --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+}
+
+/* Base resets & typography */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text-body);
+  background-color: var(--color-bg-base);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Card aesthetics matching Stitch */
+.stitch-card {
+  background: #ffffff;
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stitch-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-card);
+}
+
+.stitch-card-interactive {
+  cursor: pointer;
+}
+
+.stitch-card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: #006a58;
+}
+
+/* Stitch pill badge */
+.stitch-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Header Nav Pills */
+.nav-tab-btn {
+  transition: all 0.15s ease-in-out;
+  position: relative;
+  font-weight: 500;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.nav-tab-btn.active {
+  background-color: var(--color-brand-primary);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.nav-tab-btn:not(.active) {
+  color: #475569;
+}
+
+.nav-tab-btn:not(.active):hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+/* View transitions */
+.view-panel {
+  display: none;
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Leaflet map customization */
+.leaflet-container {
+  font-family: inherit !important;
+  border-radius: 12px;
+  z-index: 10;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: var(--shadow-hover) !important;
+  padding: 4px;
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px !important;
+  line-height: 1.4 !important;
+}
+
+/* Bottom mobile navigation */
+.mobile-bottom-nav {
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+}
+
+/* Modal styling */
+.stitch-modal-backdrop {
+  backdrop-filter: blur(4px);
+  background-color: rgba(15, 23, 42, 0.55);
+}
+
+/* Print optimizations for 'Descargar Guía (PDF)' */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+  }
+
+  header,
+  footer,
+  .mobile-bottom-nav,
+  .no-print,
+  #search-modal,
+  #detail-modal,
+  #tts-controls {
+    display: none !important;
+  }
+
+  .view-panel {
+    display: block !important;
+    page-break-after: always;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .stitch-card {
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+    break-inside: avoid;
+  }
+
+  .leaflet-container {
+    height: 300px !important;
+  }
+}

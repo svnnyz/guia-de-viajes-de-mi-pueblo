@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Procedimiento y Metodología | Caso de Estudio: Creación de la Guía Territorial con IA</title>
+  <meta name="description" content="Procedimiento técnico, prompts utilizados e Inteligencias Artificiales involucradas en el diseño y desarrollo de la Guía Territorial de Pinto y La Tenería.">
+  <meta name="theme-color" content="#006a58">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Caso de Estudio: Creación de la Web con Google Stitch y Antigravity">
+  <meta property="og:description" content="Descubre el flujo de trabajo completo, prompts exactos y herramientas de IA empleadas en este proyecto.">
+  <meta property="og:image" content="assets/procedure/mockup-1-guia-general.jpg">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#e6f4f1',
+              100: '#c2e4dc',
+              500: '#006a58',
+              600: '#005b4b',
+              700: '#004d40',
+              800: '#003a31',
+              900: '#002620',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .prompt-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #006a58;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .step-badge {
+      box-shadow: 0 0 0 4px #e6f4f1;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+
+  <!-- =========================================================================
+       CABECERA DE LA PÁGINA DE PROCEDIMIENTO
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Volver a la Aplicación -->
+      <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-9 h-9 rounded-xl bg-[#006a58] text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="font-extrabold text-slate-900 text-sm tracking-tight leading-none group-hover:text-[#006a58] transition-colors">
+            Volver a la Guía Territorial
+          </div>
+          <div class="text-[10px] font-semibold tracking-wider uppercase text-slate-400 mt-0.5">
+            Pinto y La Tenería · Aplicación Web
+          </div>
+        </div>
+      </a>
+
+      <!-- Acciones de Cabecera -->
+      <div class="flex items-center gap-2">
+        <a href="#timeline" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+          <i data-lucide="git-commit" class="w-3.5 h-3.5 text-emerald-700"></i>
+          <span>Cronología</span>
+        </a>
+        <a href="#ias-usadas" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+          <i data-lucide="bot" class="w-3.5 h-3.5 text-blue-600"></i>
+          <span>IAs Utilizadas</span>
+        </a>
+        <a href="#mockups" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+          <i data-lucide="layout" class="w-3.5 h-3.5 text-amber-600"></i>
+          <span>Mockups</span>
+        </a>
+        <a href="index.html" class="px-4 py-2 rounded-full bg-[#006a58] hover:bg-[#005244] text-white text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <span>Abrir Web en Vivo</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       HERO PRINCIPAL: CASO DE ESTUDIO
+       ========================================================================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8">
+    <div class="stitch-card p-6 sm:p-12 bg-gradient-to-br from-emerald-50/70 via-white to-slate-50 border-emerald-100 relative overflow-hidden">
+      
+      <div class="relative z-10 max-w-4xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-[#006a58] text-xs font-bold uppercase tracking-wider mb-4">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          Caso de Estudio · Ingeniería de Prompts & IA Generativa
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          Cómo se creó la Guía Territorial: Procedimiento, Prompts e IAs
+        </h1>
+
+        <p class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl">
+          De una idea inicial de guía hiperlocal a una aplicación web completa, interactiva y responsive en producción. Descubre el proceso iterativo exacto combinando <strong>Google Stitch (Gemini)</strong> para diseño asistido Text-to-UI y <strong>Antigravity (Gemini 3.8 Flash)</strong> para programación full-stack autónoma.
+        </p>
+
+        <!-- KPI Cards -->
+        <div class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Herramientas IA</span>
+            <div class="text-2xl font-black text-emerald-800 mt-0.5">2 IAs</div>
+            <p class="text-xs text-slate-500 mt-1">Google Stitch + Antigravity</p>
+          </div>
+          <div class="p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Prompts Documentados</span>
+            <div class="text-2xl font-black text-emerald-800 mt-0.5">8 Pasos</div>
+            <p class="text-xs text-slate-500 mt-1">Con transcripción y capturas</p>
+          </div>
+          <div class="p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pantallas Generadas</span>
+            <div class="text-2xl font-black text-emerald-800 mt-0.5">7 Vistas</div>
+            <p class="text-xs text-slate-500 mt-1">Responsive en móvil, tablet y PC</p>
+          </div>
+          <div class="p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Arquitectura</span>
+            <div class="text-2xl font-black text-emerald-800 mt-0.5">SPA + PWA</div>
+            <p class="text-xs text-slate-500 mt-1">Cero dependencias de build</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECCIÓN 1: LAS INTELIGENCIAS ARTIFICIALES UTILIZADAS
+       ========================================================================= -->
+  <section id="ias-usadas" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">ECOSISTEMA TECNOLÓGICO</span>
+        <h2 class="text-2xl font-bold text-slate-900">Las IAs Utilizadas en el Proyecto</h2>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- IA 1: Google Stitch -->
+      <div class="stitch-card p-6 sm:p-8 bg-white border-teal-200 hover:border-teal-400 transition">
+        <div class="flex items-start justify-between">
+          <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+            <i data-lucide="palette" class="w-6 h-6"></i>
+          </div>
+          <span class="stitch-badge bg-teal-100 text-teal-900">DISEÑO GENERATIVO TEXT-TO-UI</span>
+        </div>
+
+        <h3 class="text-xl font-bold text-slate-900 mt-4">Google Stitch (Google Labs)</h3>
+        <p class="text-xs font-semibold text-teal-700 uppercase tracking-wider mt-0.5">Motor: Gemini Multimodal para UI/UX</p>
+
+        <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+          Stitch es la plataforma experimental de Google Labs orientada a convertir descripciones en lenguaje natural en prototipos de interfaz de alta fidelidad, paletas de diseño armonizadas y componentes web interactivos.
+        </p>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-700">
+          <div class="flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+            <span><strong>Conceptualización por capas:</strong> España &rarr; Pinto &rarr; La Tenería &rarr; IES Calderón.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+            <span><strong>Definición del Sistema de Diseño:</strong> Color primario teal (<code class="bg-slate-100 px-1 py-0.5 rounded text-teal-800">#006a58</code> / <code class="bg-slate-100 px-1 py-0.5 rounded text-teal-800">#0d9488</code>), tipografía limpia y diseño de tarjetas.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+            <span><strong>Generación de mockups en dispositivos:</strong> Vistas previas en formato tablet y laptop.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- IA 2: Antigravity -->
+      <div class="stitch-card p-6 sm:p-8 bg-white border-emerald-200 hover:border-emerald-400 transition">
+        <div class="flex items-start justify-between">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
+            <i data-lucide="code-2" class="w-6 h-6"></i>
+          </div>
+          <span class="stitch-badge bg-emerald-100 text-emerald-900">INGENIERÍA FULL-STACK AUTÓNOMA</span>
+        </div>
+
+        <h3 class="text-xl font-bold text-slate-900 mt-4">Antigravity (Google DeepMind)</h3>
+        <p class="text-xs font-semibold text-emerald-700 uppercase tracking-wider mt-0.5">Modelo: Gemini 3.8 Flash (High)</p>
+
+        <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+          Antigravity es el entorno agentic de Google DeepMind dotado de acceso a terminal, manipulación de archivos y razonamiento multimodal para transformar imágenes en código funcional listo para desplegar.
+        </p>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-700">
+          <div class="flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+            <span><strong>Visión Multimodal:</strong> Análisis de las 7 capturas y extracción de textos, métricas y relaciones geográficas.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+            <span><strong>Extracción automatizada de imágenes:</strong> Scripts PowerShell con <code class="bg-slate-100 px-1 py-0.5 rounded">System.Drawing</code> para aislar fotos de monumentos y colegios.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+            <span><strong>Desarrollo SPA y Cartografía:</strong> Integración de Leaflet con coordenadas reales de Pinto, PWA, búsqueda en tiempo real y lectura de voz.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECCIÓN 2: PIPELINE DE DESARROLLO (DIAGRAMA VISUAL)
+       ========================================================================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div class="stitch-card p-6 sm:p-8 bg-slate-900 text-white">
+      <span class="stitch-badge bg-emerald-500 text-slate-950 mb-2">PIPELINE DE TRABAJO COMPLETO</span>
+      <h2 class="text-xl sm:text-2xl font-bold">Flujo de Trabajo: Del Prompt al Código Web</h2>
+      <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+        Evolución en 4 fases metodológicas que garantizan coherencia visual y rigor en los datos.
+      </p>
+
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="p-4 bg-slate-800/80 rounded-xl border border-slate-700 relative">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">FASE 01</span>
+          <h3 class="font-bold text-sm">Ideación & Alcance</h3>
+          <p class="text-xs text-slate-400 mt-1 leading-relaxed">Definición de la temática territorial: país, municipio, barrio e instituto con diseño adaptable.</p>
+          <div class="mt-3 text-[10px] font-mono text-slate-400 bg-slate-950 p-2 rounded">IA: Google Stitch</div>
+        </div>
+
+        <div class="p-4 bg-slate-800/80 rounded-xl border border-slate-700 relative">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">FASE 02</span>
+          <h3 class="font-bold text-sm">Generación de Vistas</h3>
+          <p class="text-xs text-slate-400 mt-1 leading-relaxed">Generación asistida en Stitch de las pantallas de Pinto, IES Calderón, La Tenería, Rutas y Gastronomía.</p>
+          <div class="mt-3 text-[10px] font-mono text-slate-400 bg-slate-950 p-2 rounded">IA: Google Stitch</div>
+        </div>
+
+        <div class="p-4 bg-slate-800/80 rounded-xl border border-slate-700 relative">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">FASE 03</span>
+          <h3 class="font-bold text-sm">Supervisión & Corrección</h3>
+          <p class="text-xs text-slate-400 mt-1 leading-relaxed">Ajuste fino de datos educativos reales: corrección de oferta de FP (SMR, DAM, ASIR) en el instituto.</p>
+          <div class="mt-3 text-[10px] font-mono text-slate-400 bg-slate-950 p-2 rounded">Supervisión Humana</div>
+        </div>
+
+        <div class="p-4 bg-slate-800/80 rounded-xl border border-slate-700 relative">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">FASE 04</span>
+          <h3 class="font-bold text-sm">Construcción Web</h3>
+          <p class="text-xs text-slate-400 mt-1 leading-relaxed">Traducción autónoma a SPA responsive, Leaflet maps, audio-guía, búsqueda global y PWA offline.</p>
+          <div class="mt-3 text-[10px] font-mono text-slate-400 bg-slate-950 p-2 rounded">IA: Antigravity</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECCIÓN 3: CRONOLOGÍA DETALLADA DE PROMPTS Y RESPUESTAS (CON CAPTURAS)
+       ========================================================================= -->
+  <section id="timeline" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+    <div>
+      <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">REGISTRO DE PROMPTS & EVIDENCIAS</span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Cronología Paso a Paso de los Prompts Utilizados</h2>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">
+        Cada uno de los prompts introducidos durante la sesión, su propósito y la captura de pantalla real del diálogo con la IA.
+      </p>
+    </div>
+
+    <div class="space-y-8">
+
+      <!-- PASO 1 -->
+      <article class="stitch-card p-6 sm:p-8 bg-white relative">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-[#006a58] text-white flex items-center justify-center font-bold text-xs step-badge">1</span>
+              <span class="stitch-badge bg-emerald-100 text-emerald-900 text-[10px]">FASE DE INICIO · PROMPT FUNDACIONAL</span>
+              <span class="text-xs font-mono text-slate-400">IA: Google Stitch (Gemini)</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">Idea General del Proyecto</h3>
+
+            <div class="prompt-box p-4 rounded-xl text-xs sm:text-sm text-slate-800 relative group">
+              <p class="font-semibold text-slate-500 text-[11px] uppercase mb-1">Prompt utilizado por el usuario:</p>
+              <div class="text-slate-900 leading-relaxed font-mono">
+                "Hacer una aplicación que muestre información sobre mi pueblo, mi barrio, mi Instituto, mi país. Una especie de guía de viaje, sitios turísticos, restaurantes, deportes, ... Que sea responsive y un diseño diferente para ordenador, moviles y tablets"
+              </div>
+              <button onclick="copyToClipboard(this)" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-xs transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Prompt
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-600 space-y-1.5 leading-relaxed pt-2">
+              <h4 class="font-bold text-slate-800">Objetivo & Resultado:</h4>
+              <p>El usuario establece las 4 entidades esenciales (país, pueblo, barrio e instituto) y fija el requisito de diseño responsive multiplataforma. La IA de Stitch responde estructurando el concepto de <em>"guía de viaje hiperlocal y comunitaria"</em>.</p>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-96 shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src="assets/procedure/prompt-1-inicio.png" alt="Captura Prompt 1" class="w-full h-auto object-cover cursor-pointer hover:opacity-95" onclick="openImageModal(this.src)">
+            <div class="p-2 text-center text-[10px] text-slate-400 bg-slate-50">Captura real del chat de Stitch</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PASO 2 -->
+      <article class="stitch-card p-6 sm:p-8 bg-white relative">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-[#006a58] text-white flex items-center justify-center font-bold text-xs step-badge">2</span>
+              <span class="stitch-badge bg-blue-100 text-blue-900 text-[10px]">CONCRECIÓN DE DATOS TERRITORIALES</span>
+              <span class="text-xs font-mono text-slate-400">IA: Google Stitch (Gemini)</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">Estructuración Estática y Nombres Oficiales</h3>
+
+            <div class="prompt-box p-4 rounded-xl text-xs sm:text-sm text-slate-800 relative group">
+              <p class="font-semibold text-slate-500 text-[11px] uppercase mb-1">Prompt utilizado por el usuario:</p>
+              <div class="text-slate-900 leading-relaxed font-mono">
+                "lo mismo, pero que la página sea estática. Y los datos son: País España, pueblo Pinto, barrio La Tenería, instituto IES Calderón de la Barca"
+              </div>
+              <button onclick="copyToClipboard(this)" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-xs transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Prompt
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-600 space-y-1.5 leading-relaxed pt-2">
+              <h4 class="font-bold text-slate-800">Objetivo & Resultado:</h4>
+              <p>Se aterriza la guía con datos reales de la Comunidad de Madrid: <strong>España</strong>, municipio de <strong>Pinto</strong> (Km 0 peninsular), barrio <strong>La Tenería (I y II)</strong> y el instituto <strong>IES Calderón de la Barca</strong> (C/ Asturias). Stitch configura la jerarquía territorial formal.</p>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-96 shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src="assets/procedure/prompt-2-datos-estaticos.png" alt="Captura Prompt 2" class="w-full h-auto object-cover cursor-pointer hover:opacity-95" onclick="openImageModal(this.src)">
+            <div class="p-2 text-center text-[10px] text-slate-400 bg-slate-50">Captura real del chat de Stitch</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PASO 3 -->
+      <article class="stitch-card p-6 sm:p-8 bg-white relative">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-[#006a58] text-white flex items-center justify-center font-bold text-xs step-badge">3</span>
+              <span class="stitch-badge bg-purple-100 text-purple-900 text-[10px]">DISEÑO ESPECÍFICO DE SECCIÓN</span>
+              <span class="text-xs font-mono text-slate-400">IA: Google Stitch (Gemini)</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">Diseño de la Pantalla 'Mi Instituto y Comunidad'</h3>
+
+            <div class="prompt-box p-4 rounded-xl text-xs sm:text-sm text-slate-800 relative group">
+              <p class="font-semibold text-slate-500 text-[11px] uppercase mb-1">Prompt utilizado por el usuario:</p>
+              <div class="text-slate-900 leading-relaxed font-mono">
+                "Diseñar la pantalla de 'Mi Instituto y Comunidad'"
+              </div>
+              <button onclick="copyToClipboard(this)" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-xs transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Prompt
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-600 space-y-1.5 leading-relaxed pt-2">
+              <h4 class="font-bold text-slate-800">Objetivo & Resultado:</h4>
+              <p>Stitch crea la estructura modular del centro educativo manteniendo la coherencia estilística con la plataforma <strong>Territorio</strong>: paleta teal (<code class="bg-slate-100 px-1 py-0.5 rounded">#0d9488</code>), tipografía limpia, insignias oficiales de bilingüismo, 1.150 alumnos y accesos rápidos.</p>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-96 shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src="assets/procedure/prompt-3-instituto-comunidad.png" alt="Captura Prompt 3" class="w-full h-auto object-cover cursor-pointer hover:opacity-95" onclick="openImageModal(this.src)">
+            <div class="p-2 text-center text-[10px] text-slate-400 bg-slate-50">Captura real del chat de Stitch</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PASO 4 -->
+      <article class="stitch-card p-6 sm:p-8 bg-white relative">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-[#006a58] text-white flex items-center justify-center font-bold text-xs step-badge">4</span>
+              <span class="stitch-badge bg-teal-100 text-teal-900 text-[10px]">DETALLE INSTITUCIONAL</span>
+              <span class="text-xs font-mono text-slate-400">IA: Google Stitch (Gemini)</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">Vista Detallada del IES Calderón de la Barca en Pinto</h3>
+
+            <div class="prompt-box p-4 rounded-xl text-xs sm:text-sm text-slate-800 relative group">
+              <p class="font-semibold text-slate-500 text-[11px] uppercase mb-1">Prompt utilizado por el usuario:</p>
+              <div class="text-slate-900 leading-relaxed font-mono">
+                "Diseñar la vista detallada específica del IES Calderón de la Barca"
+              </div>
+              <button onclick="copyToClipboard(this)" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-xs transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Prompt
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-600 space-y-1.5 leading-relaxed pt-2">
+              <h4 class="font-bold text-slate-800">Objetivo & Resultado:</h4>
+              <p>Generación de la cabecera con ubicación exacta en Calle Asturias s/n, horarios lectivos (08:30 - 15:00 h), y módulos pedagógicos adaptados al barrio de La Tenería.</p>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-96 shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src="assets/procedure/prompt-4-vista-ies-calderon.png" alt="Captura Prompt 4" class="w-full h-auto object-cover cursor-pointer hover:opacity-95" onclick="openImageModal(this.src)">
+            <div class="p-2 text-center text-[10px] text-slate-400 bg-slate-50">Captura real del chat de Stitch</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PASO 5 -->
+      <article class="stitch-card p-6 sm:p-8 bg-white relative">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-[#006a58] text-white flex items-center justify-center font-bold text-xs step-badge">5</span>
+              <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px]">AMPLIACIÓN CURRICULAR</span>
+              <span class="text-xs font-mono text-slate-400">IA: Google Stitch (Gemini)</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">Inclusión de la Formación Profesional</h3>
+
+            <div class="prompt-box p-4 rounded-xl text-xs sm:text-sm text-slate-800 relative group">
+              <p class="font-semibold text-slate-500 text-[11px] uppercase mb-1">Prompt utilizado por el usuario:</p>
+              <div class="text-slate-900 leading-relaxed font-mono">
+                "Agrégale también ciclos formativos"
+              </div>
+              <button onclick="copyToClipboard(this)" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-xs transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Prompt
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-600 space-y-1.5 leading-relaxed pt-2">
+              <h4 class="font-bold text-slate-800">Objetivo & Resultado:</h4>
+              <p>Reorganización de la cuadrícula curricular en formato de 4 columnas en desktop y 2 en tablet para integrar armoniosamente la <strong>Formación Profesional</strong> junto a la ESO, el Bachillerato de Ciencias y Tecnología y el de Humanidades y Ciencias Sociales.</p>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-96 shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src="assets/procedure/prompt-5-agregar-ciclos.png" alt="Captura Prompt 5" class="w-full h-auto object-cover cursor-pointer hover:opacity-95" onclick="openImageModal(this.src)">
+            <div class="p-2 text-center text-[10px] text-slate-400 bg-slate-50">Captura real del chat de Stitch</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PASO 6 -->
+      <article class="stitch-card p-6 sm:p-8 bg-white relative border-rose-200">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-xs step-badge">6</span>
+              <span class="stitch-badge bg-rose-100 text-rose-900 text-[10px]">SUPERVISIÓN HUMANA · CORRECCIÓN CRÍTICA</span>
+              <span class="text-xs font-mono text-slate-400">IA: Google Stitch (Gemini)</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">Ajuste de Ciclos Formativos Reales (Sin Alucinaciones)</h3>
+
+            <div class="prompt-box p-4 rounded-xl text-xs sm:text-sm text-slate-800 relative group border-rose-500">
+              <p class="font-semibold text-rose-700 text-[11px] uppercase mb-1">Prompt de corrección del usuario:</p>
+              <div class="text-slate-900 leading-relaxed font-mono">
+                "Corrige los ciclos, no tiene DAW, tiene ASIR. No imparte ningun ciclo de la rama administracion y gestion, tampoco tiene FP Dual"
+              </div>
+              <button onclick="copyToClipboard(this)" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-xs transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Prompt
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-600 space-y-1.5 leading-relaxed pt-2">
+              <h4 class="font-bold text-slate-800">Impacto en la Calidad del Proyecto:</h4>
+              <p>Este paso demuestra la importancia del <strong>Human-in-the-Loop</strong>: el usuario corrige que el centro realmente oferta <strong>SMR</strong> (Grado Medio), <strong>DAM</strong> (Desarrollo de Aplicaciones Multiplataforma) y <strong>ASIR</strong> (Administración de Sistemas Informáticos en Red), descartando ciclos inexistentes. Stitch actualiza la tarjeta al instante con precisión milimétrica.</p>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-96 shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src="assets/procedure/prompt-6-corregir-ciclos.png" alt="Captura Prompt 6" class="w-full h-auto object-cover cursor-pointer hover:opacity-95" onclick="openImageModal(this.src)">
+            <div class="p-2 text-center text-[10px] text-slate-400 bg-slate-50">Captura real del chat de Stitch</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PASO 7 -->
+      <article class="stitch-card p-6 sm:p-8 bg-gradient-to-br from-emerald-50/50 via-white to-slate-50 border-emerald-300 relative">
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-[#006a58] text-white flex items-center justify-center font-bold text-xs step-badge">7</span>
+              <span class="stitch-badge bg-emerald-700 text-white text-[10px]">DESARROLLO DE CÓDIGO WEB REAL</span>
+              <span class="text-xs font-mono text-emerald-800 font-bold">IA: Antigravity (Gemini 3.8 Flash)</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">Construcción Autónoma de la Aplicación Web Responsive</h3>
+
+            <div class="prompt-box p-4 rounded-xl text-xs sm:text-sm text-slate-800 relative group border-emerald-600">
+              <p class="font-semibold text-emerald-800 text-[11px] uppercase mb-1">Prompt introducido en Antigravity:</p>
+              <div class="text-slate-900 leading-relaxed font-mono">
+                "Con estas imagenes hazme una página web que sea responsive y multiplataforma"
+              </div>
+              <button onclick="copyToClipboard(this)" class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-xs transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Prompt
+              </button>
+            </div>
+
+            <div class="text-xs text-slate-600 space-y-1.5 leading-relaxed pt-2">
+              <h4 class="font-bold text-slate-800">Proceso ejecutado por Antigravity:</h4>
+              <ul class="space-y-1 list-disc list-inside text-slate-600">
+                <li>Análisis visual completo de las 7 pantallas generadas.</li>
+                <li>Extracción y recorte automático de fotografías con scripts nativos en PowerShell.</li>
+                <li>Creación del dataset relacional <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">data.js</code> con coordenadas geográficas reales.</li>
+                <li>Integración cartográfica con Leaflet.js y capas de CartoDB Positron en <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">map.js</code>.</li>
+                <li>Desarrollo de la SPA responsive en <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">index.html</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">styles.css</code> y <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">app.js</code>.</li>
+                <li>Implementación de Progressive Web App (PWA) con <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">manifest.json</code> y Service Worker offline.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-96 shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src="assets/procedure/prompt-7-antigravity-build.jpg" alt="Captura Antigravity" class="w-full h-auto object-cover cursor-pointer hover:opacity-95" onclick="openImageModal(this.src)">
+            <div class="p-2 text-center text-[10px] text-slate-400 bg-slate-50">Captura real del entorno Antigravity</div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECCIÓN 4: GALERÍA DE MOCKUPS RESULTANTES (LAS 7 PANTALLAS DE STITCH)
+       ========================================================================= -->
+  <section id="mockups" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">PROTOTIPOS GENERADOS</span>
+        <h2 class="text-2xl font-bold text-slate-900">Mockups de Pantallas Diseñadas en Google Stitch</h2>
+        <p class="text-xs text-slate-500">Haz clic sobre cualquier mockup para ampliarlo en alta definición.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Mockup 1: Guía General -->
+      <div class="stitch-card overflow-hidden group cursor-pointer" onclick="openImageModal('assets/procedure/mockup-1-guia-general.jpg')">
+        <div class="h-60 bg-slate-100 overflow-hidden relative">
+          <img src="assets/procedure/mockup-1-guia-general.jpg" alt="Mockup Guía General" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+          <span class="stitch-badge bg-emerald-100 text-emerald-900 text-[10px]">VISTA 01</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">Guía General y Portada</h4>
+          <p class="text-xs text-slate-500 mt-0.5">Visión territorial de lo macro a lo micro, equipamientos e hitos.</p>
+        </div>
+      </div>
+
+      <!-- Mockup 2: España -->
+      <div class="stitch-card overflow-hidden group cursor-pointer" onclick="openImageModal('assets/procedure/mockup-2-espana.jpg')">
+        <div class="h-60 bg-slate-100 overflow-hidden relative">
+          <img src="assets/procedure/mockup-2-espana.jpg" alt="Mockup España" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+          <span class="stitch-badge bg-blue-100 text-blue-900 text-[10px]">VISTA 02</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">España: Marco Peninsular</h4>
+          <p class="text-xs text-slate-500 mt-0.5">Centroide histórico de Pinto, redes radiales A-4, C-3 y AVE.</p>
+        </div>
+      </div>
+
+      <!-- Mockup 3: Pinto -->
+      <div class="stitch-card overflow-hidden group cursor-pointer" onclick="openImageModal('assets/procedure/mockup-3-pinto.jpg')">
+        <div class="h-60 bg-slate-100 overflow-hidden relative">
+          <img src="assets/procedure/mockup-3-pinto.jpg" alt="Mockup Pinto" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+          <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px]">VISTA 03</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">Pinto: Km 0 y Torre de Éboli</h4>
+          <p class="text-xs text-slate-500 mt-0.5">Prisión de Doña Ana de Mendoza, monolito del centro peninsular.</p>
+        </div>
+      </div>
+
+      <!-- Mockup 4: La Tenería -->
+      <div class="stitch-card overflow-hidden group cursor-pointer" onclick="openImageModal('assets/procedure/mockup-4-teneria.jpg')">
+        <div class="h-60 bg-slate-100 overflow-hidden relative">
+          <img src="assets/procedure/mockup-4-teneria.jpg" alt="Mockup La Tenería" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+          <span class="stitch-badge bg-teal-100 text-teal-900 text-[10px]">VISTA 04</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">El Barrio: La Tenería I y II</h4>
+          <p class="text-xs text-slate-500 mt-0.5">Urbanismo sostenible, bulevares Manuel de Falla y Juan Pablo II.</p>
+        </div>
+      </div>
+
+      <!-- Mockup 5: IES Calderón -->
+      <div class="stitch-card overflow-hidden group cursor-pointer" onclick="openImageModal('assets/procedure/mockup-5-ies-calderon.jpg')">
+        <div class="h-60 bg-slate-100 overflow-hidden relative">
+          <img src="assets/procedure/mockup-5-ies-calderon.jpg" alt="Mockup IES Calderón" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+          <span class="stitch-badge bg-purple-100 text-purple-900 text-[10px]">VISTA 05</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">IES Calderón de la Barca</h4>
+          <p class="text-xs text-slate-500 mt-0.5">Centro bilingüe, Bachillerato y Ciclos de Informática SMR, DAM, ASIR.</p>
+        </div>
+      </div>
+
+      <!-- Mockup 6: Naturaleza y Deporte -->
+      <div class="stitch-card overflow-hidden group cursor-pointer" onclick="openImageModal('assets/procedure/mockup-6-naturaleza.jpg')">
+        <div class="h-60 bg-slate-100 overflow-hidden relative">
+          <img src="assets/procedure/mockup-6-naturaleza.jpg" alt="Mockup Naturaleza" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+          <span class="stitch-badge bg-emerald-100 text-emerald-900 text-[10px]">VISTA 06</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">Naturaleza, Rutas y Deporte</h4>
+          <p class="text-xs text-slate-500 mt-0.5">Parque Juan Carlos I (55 ha), Arroyo Culebro y calistenia 24h.</p>
+        </div>
+      </div>
+
+      <!-- Mockup 7: Gastronomía -->
+      <div class="stitch-card overflow-hidden group cursor-pointer sm:col-span-2 lg:col-span-1" onclick="openImageModal('assets/procedure/mockup-7-gastronomia.jpg')">
+        <div class="h-60 bg-slate-100 overflow-hidden relative">
+          <img src="assets/procedure/mockup-7-gastronomia.jpg" alt="Mockup Gastronomía" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+          <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px]">VISTA 07</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">Gastronomía y Sabores</h4>
+          <p class="text-xs text-slate-500 mt-0.5">Ombligos de Pinto, Villa del Chocolate (1854) y tapeo tradicional.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECCIÓN 5: APRENDIZAJES & BUENAS PRÁCTICAS DE PROMPT ENGINEERING
+       ========================================================================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div class="stitch-card p-6 sm:p-10 bg-white">
+      <span class="stitch-badge bg-emerald-100 text-emerald-900 mb-2">LECCIONES APRENDIDAS</span>
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900">4 Claves de Éxito en este Flujo de Trabajo</h2>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">1</span>
+            Evolución Conceptual Progresiva
+          </h4>
+          <p class="text-slate-600 mt-2 leading-relaxed">
+            Comenzar con un prompt genérico amplio para explorar layouts y luego acotar con datos reales (España &rarr; Pinto &rarr; La Tenería &rarr; IES Calderón) evita atascar a la IA generativa con restricciones prematuras.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">2</span>
+            Supervisión Humana del Dominio
+          </h4>
+          <p class="text-slate-600 mt-2 leading-relaxed">
+            Las IAs pueden inferir ciclos formativos genéricos (como DAW o ramas administrativas). El prompt correctivo del usuario fue clave para que el producto final refleje la oferta verídica (SMR, DAM, ASIR).
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">3</span>
+            Separación de Diseñador e Ingeniero IA
+          </h4>
+          <p class="text-slate-600 mt-2 leading-relaxed">
+            Utilizar Stitch como "estudio de diseño UI" y Antigravity como "ingeniero de software full-stack" potencia lo mejor de ambos mundos: creatividad visual rápida y código limpio, estructurado y funcional.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">4</span>
+            Arquitectura Portátil Zero-Build
+          </h4>
+          <p class="text-slate-600 mt-2 leading-relaxed">
+            Al no requerir compiladores pesados ni instalaciones de node_modules, la web resultante puede abrirse haciendo doble clic en cualquier equipo o alojarse en segundos en GitHub Pages, Netlify o Vercel.
+          </p>
+        </div>
+      </div>
+
+      <!-- Banner de Llamada a la Acción -->
+      <div class="mt-8 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 class="font-bold text-slate-900 text-base">¿Listo para probar la web terminada?</h4>
+          <p class="text-xs text-slate-500">Navega por las 7 vistas interactivas con mapas Leaflet y buscador.</p>
+        </div>
+        <a href="index.html" class="px-6 py-3 rounded-full bg-[#006a58] hover:bg-[#005244] text-white text-xs font-bold shadow transition flex items-center gap-2">
+          <span>Abrir Aplicación Guía de Pinto</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="mt-16 bg-white border-t border-slate-200 py-10 text-slate-500 text-xs text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
+        <span class="font-bold text-slate-800">Documento Técnico de Procedimiento e Inteligencia Artificial</span>
+      </div>
+      <p class="text-slate-400 text-[11px]">
+        Guía Territorial de Pinto y La Tenería · Desarrollado con Google Stitch (Google Labs) y Antigravity (Google DeepMind)
+      </p>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL DE ZOOM DE IMÁGENES
+       ========================================================================= -->
+  <div id="image-modal" class="fixed inset-0 stitch-modal-backdrop z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl max-h-[90vh] flex flex-col relative">
+      <button onclick="closeImageModal()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div class="p-2 overflow-y-auto flex items-center justify-center bg-slate-950">
+        <img id="image-modal-src" src="" alt="Zoom" class="max-w-full max-h-[85vh] object-contain rounded">
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    });
+
+    function copyToClipboard(button) {
+      const text = button.previousElementSibling.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalHtml = button.innerHTML;
+        button.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> ¡Copiado!';
+        button.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-300');
+        if (window.lucide) lucide.createIcons();
+        setTimeout(() => {
+          button.innerHTML = originalHtml;
+          button.classList.remove('bg-emerald-50', 'text-emerald-700', 'border-emerald-300');
+          if (window.lucide) lucide.createIcons();
+        }, 2000);
+      });
+    }
+
+    function openImageModal(src) {
+      const modal = document.getElementById('image-modal');
+      const img = document.getElementById('image-modal-src');
+      img.src = src;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('image-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Cerrar al click fuera
+    document.getElementById('image-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'image-modal') {
+        closeImageModal();
+      }
+    });
+
+    // Tecla Escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeImageModal();
+      }
+    });
+  </script>
+
+</body>
+</html>

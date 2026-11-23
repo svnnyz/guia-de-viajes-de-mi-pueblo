@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Pinto y La Tenería | Guía Territorial y Comunitaria</title>
+  <meta name="description" content="Guía territorial y comunitaria interactiva de Pinto y La Tenería. Marco peninsular, patrimonio histórico, IES Calderón de la Barca, naturaleza, deportes y gastronomía.">
+  <meta name="theme-color" content="#006a58">
+
+  <!-- Open Graph / Meta Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pinto y La Tenería: Guía Territorial y Comunitaria">
+  <meta property="og:description" content="Portal cívico y territorial interactivo. Diseños oficiales Google Stitch Labs.">
+  <meta property="og:image" content="assets/images/torre-eboli.jpg">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#e6f4f1',
+              100: '#c2e4dc',
+              500: '#006a58',
+              600: '#005b4b',
+              700: '#004d40',
+              800: '#003a31',
+              900: '#002620',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Leaflet CSS & JS for Interactive Cartography -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900 pb-20 md:pb-0">
+
+  <!-- =========================================================================
+       ENCABEZADO INSTITUCIONAL / HEADER (STICKY & RESPONSIVE)
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo & Marca -->
+        <a href="#general" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-emerald-600 rounded-lg p-1">
+          <div class="w-9 h-9 rounded-xl bg-[#006a58] text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="font-extrabold text-slate-900 text-sm tracking-tight leading-none group-hover:text-[#006a58] transition-colors">
+              Guía Territorial
+            </div>
+            <div class="text-[10px] font-semibold tracking-wider uppercase text-slate-400 mt-0.5">
+              Red Cívica & Local · Pinto
+            </div>
+          </div>
+        </a>
+
+        <!-- Navegación Principal en Píldoras (Escritorio) -->
+        <nav class="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/80">
+          <button data-tab="general" class="nav-tab-btn active px-3.5 py-1.5 rounded-full text-xs transition">Guía General</button>
+          <button data-tab="espana" class="nav-tab-btn px-3.5 py-1.5 rounded-full text-xs transition">España</button>
+          <button data-tab="pinto" class="nav-tab-btn px-3.5 py-1.5 rounded-full text-xs transition">Pinto</button>
+          <button data-tab="teneria" class="nav-tab-btn px-3.5 py-1.5 rounded-full text-xs transition">La Tenería</button>
+          <button data-tab="ies-calderon" class="nav-tab-btn px-3.5 py-1.5 rounded-full text-xs transition">IES Calderón</button>
+          <button data-tab="naturaleza" class="nav-tab-btn px-3.5 py-1.5 rounded-full text-xs transition">Naturaleza y Deporte</button>
+          <button data-tab="gastronomia" class="nav-tab-btn px-3.5 py-1.5 rounded-full text-xs transition">Gastronomía</button>
+        </nav>
+
+        <!-- Botones de Acción (PDF, Búsqueda, Audio, Diseños) -->
+        <div class="flex items-center gap-2">
+          <!-- Botón Buscar -->
+          <button class="open-search-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition" title="Buscar en la guía (Ctrl+K)">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span class="hidden sm:inline">Buscar</span>
+            <kbd class="hidden md:inline-block text-[10px] bg-white border border-slate-300 px-1.5 py-0.2 rounded text-slate-400">⌘K</kbd>
+          </button>
+
+          <!-- Botón Audio-Guía -->
+          <button id="tts-toggle-btn" class="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition" title="Escuchar resumen de esta sección">
+            <i data-lucide="volume-2" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Botón Procedimiento y Prompts IA -->
+          <a href="procedimiento.html" class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-[#006a58] text-xs font-semibold border border-emerald-200 transition" title="Ver procedimiento técnico y prompts de IA">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>Cómo se hizo (Prompts)</span>
+          </a>
+
+          <!-- Botón Ver Diseño Stitch Original -->
+          <button id="toggle-stitch-preview-btn" class="hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold border border-slate-200 transition" title="Ver el diseño original de Stitch">
+            <i data-lucide="layout" class="w-3.5 h-3.5"></i>
+            <span class="hidden xl:inline">Boceto Stitch</span>
+          </button>
+
+          <!-- Botón Descargar Guía (PDF) -->
+          <button class="download-pdf-btn flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#006a58] hover:bg-[#005244] text-white text-xs font-bold shadow-sm hover:shadow transition">
+            <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Descargar Guía (PDF)</span>
+            <span class="sm:hidden">PDF</span>
+          </button>
+
+          <!-- Menú Móvil Hamburger -->
+          <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Barra de Sub-Navegación / Breadcrumbs & Código Cartográfico -->
+    <div class="bg-slate-50 border-t border-slate-100 px-4 sm:px-6 lg:px-8 py-1.5 text-xs text-slate-500 flex items-center justify-between">
+      <div id="dynamic-breadcrumb" class="flex items-center overflow-x-auto whitespace-nowrap py-0.5">
+        <a href="#general" class="hover:text-emerald-700">Inicio</a>
+        <span class="mx-1 text-slate-400">/</span>
+        <span class="text-slate-700 font-medium">Guía General</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+        <span id="carto-module-code">MÓDULO CARTOGRÁFICO TERRITORIAL</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       DRAWER MÓVIL LATERAL
+       ========================================================================= -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <aside id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out p-6 flex flex-col justify-between">
+    <div>
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-[#006a58] text-white flex items-center justify-center">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+          </div>
+          <span class="font-extrabold text-slate-900 text-sm">Menú Territorial</span>
+        </div>
+        <button id="close-drawer-btn" class="p-1 rounded-lg text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <nav class="mt-6 space-y-1.5">
+        <button data-tab="general" class="nav-tab-btn w-full text-left px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between hover:bg-slate-100">
+          <span class="flex items-center gap-3"><i data-lucide="layout-grid" class="w-4 h-4 text-emerald-600"></i> Guía General</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+        <button data-tab="espana" class="nav-tab-btn w-full text-left px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between hover:bg-slate-100">
+          <span class="flex items-center gap-3"><i data-lucide="map" class="w-4 h-4 text-emerald-600"></i> España (Marco Macro)</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+        <button data-tab="pinto" class="nav-tab-btn w-full text-left px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between hover:bg-slate-100">
+          <span class="flex items-center gap-3"><i data-lucide="landmark" class="w-4 h-4 text-emerald-600"></i> Pinto (Km 0 & Historia)</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+        <button data-tab="teneria" class="nav-tab-btn w-full text-left px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between hover:bg-slate-100">
+          <span class="flex items-center gap-3"><i data-lucide="home" class="w-4 h-4 text-emerald-600"></i> Barrio La Tenería I y II</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+        <button data-tab="ies-calderon" class="nav-tab-btn w-full text-left px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between hover:bg-slate-100">
+          <span class="flex items-center gap-3"><i data-lucide="graduation-cap" class="w-4 h-4 text-emerald-600"></i> IES Calderón de la Barca</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+        <button data-tab="naturaleza" class="nav-tab-btn w-full text-left px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between hover:bg-slate-100">
+          <span class="flex items-center gap-3"><i data-lucide="trees" class="w-4 h-4 text-emerald-600"></i> Naturaleza & Deportes</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+        <button data-tab="gastronomia" class="nav-tab-btn w-full text-left px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between hover:bg-slate-100">
+          <span class="flex items-center gap-3"><i data-lucide="utensils" class="w-4 h-4 text-emerald-600"></i> Gastronomía & Hostelería</span>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        </button>
+      </nav>
+
+      <div class="pt-3 border-t border-slate-100 mt-3">
+        <a href="procedimiento.html" class="w-full px-4 py-3 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-50 border border-emerald-200 flex items-center justify-between hover:bg-emerald-100 transition">
+          <span class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i> Cómo se hizo (Prompts & IAs)</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-emerald-700"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="pt-6 border-t border-slate-200">
+      <button class="download-pdf-btn w-full py-2.5 rounded-xl bg-[#006a58] text-white font-bold text-xs flex items-center justify-center gap-2 shadow">
+        <i data-lucide="download" class="w-4 h-4"></i> Descargar Guía Completa (PDF)
+      </button>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       CONTENIDO PRINCIPAL: 7 VISTAS (SPA SWITCHING)
+       ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-12">
+
+    <!-- =====================================================================
+         VISTA 1: GUÍA GENERAL (OVERVIEW DEL PORTAL)
+         ===================================================================== -->
+    <div id="view-general" class="view-panel active space-y-12">
+      
+      <!-- Hero de Bienvenida -->
+      <section class="stitch-card p-6 sm:p-10 bg-gradient-to-br from-emerald-50/50 via-white to-slate-50 relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <span class="stitch-badge bg-emerald-100 text-emerald-800 mb-3">Portal Territorial Oficial</span>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Pinto y La Tenería: Guía Territorial y Comunitaria
+          </h1>
+          <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+            Descubre el posicionamiento territorial y cartográfico de la península Ibérica, la vida de los barrios Tenería y el entorno escolar en el IES Calderón de la Barca.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button data-goto="pinto" class="px-5 py-2.5 rounded-full bg-[#006a58] hover:bg-[#005244] text-white font-semibold text-xs transition shadow-sm flex items-center gap-2">
+              Explorar Sección Histórica <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+            <button data-goto="teneria" class="px-5 py-2.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-semibold text-xs transition shadow-sm">
+              Conocer La Tenería I y II
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Tarjetas de Ámbitos Clave -->
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div data-goto="espana" class="stitch-card stitch-card-interactive p-4 bg-white hover:border-emerald-500 transition">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Península Ibérica</span>
+            <h3 class="text-base font-bold text-slate-900 mt-0.5">España</h3>
+            <p class="text-xs text-slate-500 mt-1">Centro geográfico e histórico peninsular.</p>
+          </div>
+          <div data-goto="pinto" class="stitch-card stitch-card-interactive p-4 bg-white hover:border-emerald-500 transition">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Km 0 Simbólico</span>
+            <h3 class="text-base font-bold text-slate-900 mt-0.5">Torre de Éboli</h3>
+            <p class="text-xs text-slate-500 mt-1">Fortaleza del siglo XIV y centro eclesiástico.</p>
+          </div>
+          <div data-goto="teneria" class="stitch-card stitch-card-interactive p-4 bg-white hover:border-emerald-500 transition">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">La Tenería I y II</span>
+            <h3 class="text-base font-bold text-slate-900 mt-0.5">Entorno Residencial</h3>
+            <p class="text-xs text-slate-500 mt-1">Bulevares verdes, parques y vida familiar.</p>
+          </div>
+          <div data-goto="ies-calderon" class="stitch-card stitch-card-interactive p-4 bg-white hover:border-emerald-500 transition">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">IES Calderón</span>
+            <h3 class="text-base font-bold text-slate-900 mt-0.5">Centro Bilingüe</h3>
+            <p class="text-xs text-slate-500 mt-1">Referente formativo con ESO, Bachillerato y FP.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 1: El Municipio Pinto y su Km 0 -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">EJE SUR METROPOLITANO</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900">El Municipio: Pinto y su Km 0 Simbólico</h2>
+          </div>
+          <button data-goto="pinto" class="text-xs font-semibold text-[#006a58] hover:underline flex items-center gap-1">
+            Ver sección completa <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Tarjeta Grande con Foto Torre de Éboli -->
+          <div class="lg:col-span-7 stitch-card overflow-hidden group">
+            <div class="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-900 cursor-pointer" onclick="App.openDetailModal('eboli')">
+              <img src="assets/images/torre-eboli.jpg" alt="Torre de Éboli" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6">
+                <div>
+                  <span class="stitch-badge bg-emerald-700 text-white text-[10px]">Monumento Histórico</span>
+                  <h3 class="text-xl font-extrabold text-white mt-1">La Torre de Éboli y el Centro de la Península</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                La legendaria fortaleza medieval de Pinto albergó a Doña Ana de Mendoza, la célebre Princesa de Éboli, recluida por orden del rey Felipe II en 1579. Este enclave no es solo un hito monumental, sino según la tradición histórica y cartolaria, marca el centro exacto de la península Ibérica, hoy simbolizado en la emblemática Plaza de la Constitución.
+              </p>
+              <div class="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-4 text-xs">
+                <div>
+                  <span class="font-bold text-slate-800 block">Torre del Homenaje</span>
+                  <span class="text-slate-500">25 metros de altura con muros de sillería caliza</span>
+                </div>
+                <div>
+                  <span class="font-bold text-slate-800 block">Parque Juan Carlos I</span>
+                  <span class="text-slate-500">55 hectáreas con lago artificial navegable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Villa del Chocolate e Hitos Urbanos -->
+          <div class="lg:col-span-5 space-y-4">
+            <!-- Villa del Chocolate -->
+            <div class="stitch-card p-6 bg-gradient-to-br from-amber-50/40 via-white to-slate-50 border-amber-200/60">
+              <span class="stitch-badge bg-amber-100 text-amber-900 mb-2">Tradición Dulce e Industrial</span>
+              <h3 class="text-base font-bold text-slate-900">Villa del Chocolate</h3>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                Pinto cuenta con más de un siglo y medio de aroma a cacao gracias a marcas históricas como <strong>La Colonial</strong> y <strong>Chocolates Eureka</strong>. Esta tradición sigue viva en la fiesta anual del chocolate y en los confiteros artesanos de los dulces "Ombligos".
+              </p>
+              <div class="mt-4 flex gap-2">
+                <button data-goto="gastronomia" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-sm">
+                  Ver obrador oficial
+                </button>
+                <button onclick="App.openDetailModal('ombligos')" class="px-3 py-1.5 rounded-lg bg-white border border-amber-300 text-amber-900 text-xs font-semibold">
+                  Los Ombligos de Pinto
+                </button>
+              </div>
+            </div>
+
+            <!-- Hitos Urbanos List -->
+            <div class="stitch-card p-6">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Hitos Urbanos de Pinto</h4>
+              <ul class="space-y-3 text-xs">
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold text-[10px]">1</span>
+                  <div>
+                    <span class="font-bold text-slate-800">Ermita de San Antón</span>
+                    <p class="text-slate-500 text-[11px]">Templo barroco devocional y sede de tradiciones populares.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold text-[10px]">2</span>
+                  <div>
+                    <span class="font-bold text-slate-800">Iglesia Santo Domingo de Silos</span>
+                    <p class="text-slate-500 text-[11px]">Templo renacentista de tres naves con retablo manierista mayor.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold text-[10px]">3</span>
+                  <div>
+                    <span class="font-bold text-slate-800">Estación de Cercanías C-3</span>
+                    <p class="text-slate-500 text-[11px]">Histórica línea inaugurada en 1851, a 25 min de Madrid-Atocha.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: El Barrio La Tenería I y II -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">URBANISMO SOSTENIBLE Y COMUNIDAD</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900">El Barrio: La Tenería I y II</h2>
+          </div>
+          <button data-goto="teneria" class="text-xs font-semibold text-[#006a58] hover:underline flex items-center gap-1">
+            Ver monografía del barrio <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="stitch-card p-6">
+            <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center mb-3">
+              <i data-lucide="bike" class="w-4 h-4"></i>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">Movilidad y Bulevares</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Ejes vertebradores como la Calle Juan Pablo II y Manuel de Falla ofrecen aceras de más de 4 metros, carriles bici segregados y pacificación de tráfico rodado.
+            </p>
+          </div>
+          <div class="stitch-card p-6">
+            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center mb-3">
+              <i data-lucide="trees" class="w-4 h-4"></i>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">Parque Gabriel Celaya</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              El pulmón central de La Tenería, con áreas infantiles homologadas, praderas verdes con drenaje sostenible y áreas de calistenia al aire libre.
+            </p>
+          </div>
+          <div class="stitch-card p-6">
+            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center mb-3">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">Comercio de Proximidad</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              Obradores de masa madre, fruterías, farmacias, clínicas dentales y animadas terrazas en los bajos abiertos que fortalecen la vida vecinal.
+            </p>
+          </div>
+        </div>
+
+        <!-- Banner Comparativa de Fases -->
+        <div class="stitch-card p-6 bg-slate-50 border-slate-200">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="border-l-4 border-emerald-600 pl-4">
+              <h4 class="font-bold text-slate-800 text-sm">La Tenería I (Consolidada)</h4>
+              <p class="text-xs text-slate-500 mt-1">
+                Diseñada en la década de los 2000, con manzanas residenciales cerradas, piscinas interiores, zonas comunes ajardinadas y el Centro de Salud La Tenería.
+              </p>
+            </div>
+            <div class="border-l-4 border-teal-600 pl-4">
+              <h4 class="font-bold text-slate-800 text-sm">La Tenería II (Expansión)</h4>
+              <p class="text-xs text-slate-500 mt-1">
+                Área contemporánea que acoge a familias jóvenes, el IES Calderón de la Barca, proyectos de vivienda de alta eficiencia energética A y grandes paseos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: Equipamiento Educativo: IES Calderón de la Barca -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">CENTRO EDUCATIVO DE REFERENCIA</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900">IES Calderón de la Barca</h2>
+          </div>
+          <button data-goto="ies-calderon" class="text-xs font-semibold text-[#006a58] hover:underline flex items-center gap-1">
+            Ver oferta académica <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 stitch-card overflow-hidden">
+            <div class="h-48 w-full bg-slate-800 relative cursor-pointer" onclick="App.openDetailModal('calderon')">
+              <img src="assets/images/ies-calderon.jpg" alt="IES Calderón de la Barca" class="w-full h-full object-cover">
+              <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded text-[11px] font-bold text-slate-800">
+                Barrio La Tenería II
+              </div>
+            </div>
+            <div class="p-6">
+              <span class="stitch-badge bg-blue-100 text-blue-900 mb-2">Bilingüe Inglés</span>
+              <h3 class="text-base font-bold text-slate-900">Instituto de Educación Secundaria Bilingüe</h3>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                Polo educativo vertebrador del barrio de La Tenería. Centro público comprometido con el rigor académico, el bilingüismo en inglés, la innovación digital y la convivencia escolar.
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2 text-[10px] font-bold uppercase">
+                <span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">950-1.100 alumnos</span>
+                <span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">Ecoescuelas</span>
+                <span class="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full">FP Informática</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="stitch-card p-4">
+              <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
+                <i data-lucide="book" class="w-4 h-4 text-emerald-600"></i> ESO y Bachillerato
+              </h4>
+              <p class="text-xs text-slate-500 mt-1">Programa Bilingüe de la CAM, refuerzo instrumental en matemáticas y preparación EvAU.</p>
+            </div>
+            <div class="stitch-card p-4">
+              <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
+                <i data-lucide="cpu" class="w-4 h-4 text-emerald-600"></i> FP Informática & TIC
+              </h4>
+              <p class="text-xs text-slate-500 mt-1">Grado Medio en SMR y Grados Superiores en DAM y DAW con convenios FCT líderes.</p>
+            </div>
+            <div class="stitch-card p-4">
+              <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
+                <i data-lucide="library" class="w-4 h-4 text-emerald-600"></i> Biblioteca Digital
+              </h4>
+              <p class="text-xs text-slate-500 mt-1">Más de 12.000 volúmenes de consulta y literatura juvenil integrada en eBiblio.</p>
+            </div>
+            <div class="stitch-card p-4">
+              <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
+                <i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i> Huerto Escolar & STEAM
+              </h4>
+              <p class="text-xs text-slate-500 mt-1">Parcela pedagógica gestionada colaborativamente, robótica con Arduino e impresoras 3D.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Directorio y Teléfonos de Utilidad Pública -->
+      <section class="stitch-card p-6 sm:p-8 bg-slate-50 border-slate-200">
+        <h3 class="text-base font-bold text-slate-900">Directorio y Teléfonos de Utilidad Pública</h3>
+        <p class="text-xs text-slate-500 mt-0.5">Servicios comunitarios de referencia inmediata para vecinos y comunidad educativa.</p>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 bg-white rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase text-emerald-700">Educación</span>
+            <h4 class="font-bold text-slate-800 text-xs mt-1">IES Calderón de la Barca</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Calle Asturias, s/n</p>
+            <a href="tel:916928490" class="text-xs font-bold text-emerald-700 mt-2 block hover:underline">Tel. 91 692 84 90</a>
+          </div>
+          <div class="p-4 bg-white rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase text-emerald-700">Salud</span>
+            <h4 class="font-bold text-slate-800 text-xs mt-1">Centro de Salud La Tenería</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Calle Juan Pablo II</p>
+            <a href="tel:911939022" class="text-xs font-bold text-emerald-700 mt-2 block hover:underline">Cita: 91 193 90 22</a>
+          </div>
+          <div class="p-4 bg-white rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase text-emerald-700">Administración</span>
+            <h4 class="font-bold text-slate-800 text-xs mt-1">Ayuntamiento de Pinto</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Plaza de la Constitución, 1</p>
+            <a href="tel:912483700" class="text-xs font-bold text-emerald-700 mt-2 block hover:underline">Tel. 91 248 37 00</a>
+          </div>
+          <div class="p-4 bg-white rounded-xl border border-slate-200">
+            <span class="text-[10px] font-bold uppercase text-emerald-700">Seguridad</span>
+            <h4 class="font-bold text-slate-800 text-xs mt-1">Policía Local y Emergencias</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">C/ Poeta José Hierro</p>
+            <a href="tel:112" class="text-xs font-bold text-rose-600 mt-2 block hover:underline">Urgencias: 092 / 112</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- =====================================================================
+         VISTA 2: ESPAÑA (MARCO GEOGRÁFICO, HISTÓRICO Y PENINSULAR)
+         ===================================================================== -->
+    <div id="view-espana" class="view-panel space-y-10">
+      
+      <!-- Cabecera de la Sección -->
+      <section class="stitch-card p-6 sm:p-8 bg-white relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="max-w-3xl">
+            <span class="stitch-badge bg-emerald-100 text-emerald-900 mb-2">ÁMBITO ESTATAL · PENÍNSULA IBÉRICA</span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              España: Marco Geográfico, Histórico y Peninsular
+            </h1>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              La perspectiva macro: situación en el suroeste de Europa, encrucijada cultural y organización territorial que acoge a la Comunidad de Madrid y la Comarca Sur.
+            </p>
+          </div>
+          <!-- Watermark Map Icon -->
+          <div class="hidden lg:block text-slate-100 opacity-60">
+            <i data-lucide="map" class="w-24 h-24 stroke-1"></i>
+          </div>
+        </div>
+
+        <!-- 4 Métricas Clave de España -->
+        <div class="mt-6 pt-6 border-t border-slate-100 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Superficie Total</span>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-800 mt-0.5">505.990 <span class="text-xs font-normal text-slate-500">km²</span></div>
+            <p class="text-[11px] text-slate-500 mt-1">4º país más extenso del continente europeo</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Población Censada</span>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-800 mt-0.5">~48M <span class="text-xs font-normal text-slate-500">habitantes</span></div>
+            <p class="text-[11px] text-slate-500 mt-1">Alta concentración en el eje central</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Descentralización</span>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-800 mt-0.5">17 <span class="text-xs font-normal text-slate-500">CC.AA. + 2 Ciudades</span></div>
+            <p class="text-[11px] text-slate-500 mt-1">Estructura autonómica constitucional (1978)</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Régimen Climático</span>
+            <div class="text-base sm:text-lg font-extrabold text-emerald-800 mt-0.5">Mediterráneo Continental</div>
+            <p class="text-[11px] text-slate-500 mt-1">Inviernos rigurosos y estíos cálidos</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bloques Paralelos: Centroide Peninsular vs Estructura Territorial -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- El Centro Geográfico Peninsular -->
+        <div class="stitch-card p-6">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700">HITO GEODÉSICO & CARTOGRAFÍA TRADICIONAL</span>
+          <h2 class="text-lg font-bold text-slate-900 mt-1">El Centro Geográfico Peninsular: De Madrid a Pinto</h2>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            Históricamente, la determinación del centroide de la Península Ibérica ha sido objeto de investigaciones topográficas, tradiciones populares y cálculos astronómicos. Durante la dominación andalusí y posteriormente en el siglo XIV, diversas crónicas situaron en el entorno de la villa de Pinto el vórtice o punto medio peninsular.
+          </p>
+
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 bg-emerald-50 rounded-lg border border-emerald-100">
+              <h4 class="font-bold text-emerald-900 text-xs">Pinto (Punto Céntrico)</h4>
+              <p class="text-[11px] text-emerald-800 mt-0.5">Localización ancestral simbolizada por el monolito conmemorativo en el corazón urbano.</p>
+            </div>
+            <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
+              <h4 class="font-bold text-blue-900 text-xs">Kilómetro 0 Radial</h4>
+              <p class="text-[11px] text-blue-800 mt-0.5">La Puerta del Sol fija el origen de las seis carreteras nacionales radiales.</p>
+            </div>
+          </div>
+
+          <div class="mt-4 p-3 bg-slate-50 rounded-lg text-xs text-slate-600 border border-slate-200">
+            <strong class="text-slate-800">Dato Histórico:</strong> La etimología comúnmente atribuida a Pinto deriva del latín <em>punctum</em> ('punto'), refiriéndose al enclave geográfico donde los agrimensores romanos y cartógrafos árabes establecieron mediciones centrales.
+          </div>
+        </div>
+
+        <!-- Estructura Territorial y Administrativa -->
+        <div class="stitch-card p-6">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700">ARTICULACIÓN COMPETENCIAL</span>
+          <h2 class="text-lg font-bold text-slate-900 mt-1">Estructura Territorial y Administrativa</h2>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            Desglose piramidal de las competencias y escalas de gobierno que regulan el marco vital de la ciudadanía:
+          </p>
+
+          <div class="mt-4 space-y-3">
+            <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs shrink-0">1</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Administración General del Estado</h4>
+                <p class="text-[11px] text-slate-500 mt-0.5">Leyes orgánicas, red nacional viario, seguridad, soberanía y marco fiscal común.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+              <span class="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs shrink-0">2</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Comunidad de Madrid (Autonomía Uniprovincial)</h4>
+                <p class="text-[11px] text-slate-500 mt-0.5">Educación (colegios e institutos IES), sanidad, ordenación comarcal y transporte regional.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+              <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-xs shrink-0">3</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">Ayuntamiento & Comarca Sur</h4>
+                <p class="text-[11px] text-slate-500 mt-0.5">Gestión municipal de Pinto: urbanismo vecinal, parques, servicios de proximidad y barrios residenciales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Redes de Comunicación e Infraestructura -->
+      <section class="stitch-card p-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">INFRAESTRUCTURAS VERTEBRADORAS</span>
+        <h2 class="text-lg font-bold text-slate-900 mt-1">Patrimonio, Diversidad y Redes de Comunicación</h2>
+        <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+          La disposición radial articulada a lo largo de los siglos XVIII y XX consolidó la Meseta Central como el nodo de articulación hacia Andalucía, Levante, Extremadura y el norte peninsular.
+        </p>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl border border-slate-200 bg-white">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-600 text-white">A-4</span>
+            <h3 class="font-bold text-slate-900 text-xs mt-2">Autovía del Sur (Eje Radial)</h3>
+            <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">Arteria fundamental que enlaza Madrid con Andalucía a través del corredor de Pinto, Valdemoro y Aranjuez.</p>
+            <div class="mt-3 text-[10px] font-semibold text-slate-400">MADRID • CÓRDOBA • SEVILLA • CÁDIZ</div>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-white">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-600 text-white">Línea C-3</span>
+            <h3 class="font-bold text-slate-900 text-xs mt-2">Cercanías Renfe</h3>
+            <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">La histórica vía inaugurada en 1851 conecta a los estudiantes y trabajadores de Pinto con Atocha y Sol en menos de 25 min.</p>
+            <div class="mt-3 text-[10px] font-semibold text-purple-700">FRECUENCIA PUNTA: 10-15 MIN</div>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-white">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-600 text-white">M-50 / M-506</span>
+            <h3 class="font-bold text-slate-900 text-xs mt-2">Plataformas Logísticas Sur</h3>
+            <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">Interconexión viaria estratégica y proximidad a corredores de alta velocidad AVE, convirtiendo el sur en un hub peninsular.</p>
+            <div class="mt-3 text-[10px] font-semibold text-slate-400">CORREDOR LOGÍSTICO METROPOLITANO</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cartografía Interactiva España - Pinto -->
+      <section class="stitch-card p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">LOCALIZACIÓN ESTRATÉGICA</span>
+            <h2 class="text-lg font-bold text-slate-900">Visualización Geográfica: De la Península al Entorno Urbano</h2>
+            <p class="text-xs text-slate-500">Posicionamiento en la Submeseta Sur, Cuenca del Tajo y altitud 604 msnm.</p>
+          </div>
+          <div class="flex gap-1.5 text-xs">
+            <span class="bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-full text-[10px] font-semibold">Submeseta Sur</span>
+            <span class="bg-blue-50 text-blue-800 px-2.5 py-1 rounded-full text-[10px] font-semibold">Cuenca del Tajo</span>
+          </div>
+        </div>
+
+        <div id="map-espana" class="w-full h-80 rounded-xl border border-slate-200"></div>
+      </section>
+
+      <!-- Transición de Escala: Banner a Pinto -->
+      <div class="stitch-card p-6 sm:p-8 bg-[#006a58] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-200">TRANSICIÓN DE ESCALA CARTOGRÁFICA</span>
+          <h3 class="text-xl font-bold mt-1">Descender al Nivel Municipal</h3>
+          <p class="text-xs text-emerald-100 mt-0.5">Explora la historia viva, la emblemática Torre de Éboli, el origen del Km 0 y la vida comunitaria.</p>
+        </div>
+        <button data-goto="pinto" class="px-6 py-2.5 rounded-full bg-white text-[#006a58] font-bold text-xs shadow hover:bg-emerald-50 transition whitespace-nowrap">
+          Continuar a: Pinto (Km 0 y Torre de Éboli) &rarr;
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================================
+         VISTA 3: PINTO (MUNICIPIO HISTÓRICO Y KM 0 SIMBÓLICO)
+         ===================================================================== -->
+    <div id="view-pinto" class="view-panel space-y-10">
+      
+      <!-- Cabecera Pinto -->
+      <section class="stitch-card p-6 sm:p-8 bg-white">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="stitch-badge bg-emerald-100 text-emerald-900 mb-2">MONOGRAFÍA MUNICIPAL · EJE SUR METROPOLITANO</span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              Pinto: Municipio Histórico y Km 0 Simbólico
+            </h1>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+              Villa centenaria del sur metropolitano de Madrid, famosa por su Torre de Éboli, su tradición chocolatera y su condición de encrucijada peninsular.
+            </p>
+          </div>
+          <!-- Stats rápidas -->
+          <div class="flex flex-row md:flex-col gap-3 text-right">
+            <div class="text-xs"><span class="text-slate-400 block text-[10px] uppercase font-bold">Altitud media</span> <strong class="text-slate-800 text-sm">604 m</strong></div>
+            <div class="text-xs"><span class="text-slate-400 block text-[10px] uppercase font-bold">A Puerta del Sol</span> <strong class="text-slate-800 text-sm">20,5 km</strong></div>
+            <div class="text-xs"><span class="text-slate-400 block text-[10px] uppercase font-bold">Cercanías C-3</span> <strong class="text-emerald-700 text-sm">25 min</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hero Torre de Éboli & Crónica Histórica -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Torre de Éboli Card -->
+        <div class="lg:col-span-7 stitch-card overflow-hidden">
+          <div class="h-64 sm:h-80 w-full relative group cursor-pointer" onclick="App.openDetailModal('eboli')">
+            <img src="assets/images/torre-eboli.jpg" alt="Torre de Éboli" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent flex items-end p-6">
+              <div>
+                <div class="flex gap-2 mb-1">
+                  <span class="stitch-badge bg-emerald-600 text-white text-[10px]">Patrimonio Nacional s. XIV</span>
+                  <span class="stitch-badge bg-white/20 text-white backdrop-blur-sm text-[10px]">25 Metros de Altura</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold text-white">La Torre de Éboli y la Plaza de la Constitución</h3>
+                <p class="text-xs text-slate-300 mt-1 line-clamp-2">Monumento emblemático de sillería caliza blanca erigido en el siglo XIV. Símbolo inconfundible del perfil pinteño.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Crónica de la Corte y Monolito -->
+        <div class="lg:col-span-5 space-y-4">
+          <!-- Crónica de Doña Ana de Mendoza -->
+          <div class="stitch-card p-6 bg-amber-50/50 border-amber-200">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-800">CRÓNICA DE LA CORTE (1579) · FELIPE II VS ÉBOLI</span>
+            <h3 class="text-base font-bold text-amber-950 mt-1">La Prisión de Doña Ana de Mendoza</h3>
+            <p class="text-xs text-amber-900/80 mt-2 leading-relaxed">
+              En la noche del 28 de julio de 1579, por mandato expreso del rey Felipe II tras el asesinato de Juan de Escobedo, la influyente y carismática Princesa de Éboli fue arrestada en Madrid y conducida bajo custodia a esta torre del homenaje, donde permaneció confinada durante seis meses en sus aposentos superiores. Su arquitectura defensiva conservó matacanes almenados, bóvedas de crucería y un recio carácter que domina el centro histórico vecinal.
+            </p>
+          </div>
+
+          <!-- Monolito del Centro Peninsular -->
+          <div class="stitch-card p-5 bg-white">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 text-xs">El Monolito del Centro Peninsular</h4>
+                <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                  Situado en la contigua Plaza de la Constitución, el hito escultórico conmemora la arraigada leyenda popular y las tradiciones históricas que sitúan en Pinto el auténtico centro geográfico y simbólico de la Península Ibérica.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tradición Dulce: Villa del Chocolate -->
+      <section class="stitch-card p-6 sm:p-8">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-800">IDENTIDAD GASTRONÓMICA E INDUSTRIAL</span>
+        <h2 class="text-xl font-bold text-slate-900 mt-1">Tradición Dulce: Villa del Chocolate</h2>
+        <p class="text-xs text-slate-600 mt-1 max-w-3xl leading-relaxed">
+          Más de siglo y medio de aroma tostado a cacao define la memoria sensorial y laboral de Pinto, cuna de los obradores chocolateros de Madrid.
+        </p>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-5 rounded-xl border border-slate-200 bg-white">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">PIONEROS INDUSTRIALES</span>
+            <h3 class="font-bold text-slate-900 text-sm mt-1">La Colonial y Eureka</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Hacia mediados del siglo XIX, la llegada del ferrocarril favoreció el asentamiento de industrias reposteras insignes como <strong>La Colonial</strong> (1854) y posteriormente <strong>Chocolates Eureka</strong>. La villa abastecía de tabletas de chocolate fino y cacao soluble a los cafés de la Puerta del Sol.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-xl border border-slate-200 bg-white">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">PASTELERÍA OFICIAL</span>
+            <h3 class="font-bold text-slate-900 text-sm mt-1">'Los Ombligos de Pinto'</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Creación artesanal registrada que rinde tributo directo a la condición de Pinto como centro geográfico peninsular. Se elaboran a partir de una delicada masa sablé con forma circular característica.
+            </p>
+            <div class="mt-3 flex gap-1.5 text-[10px] font-semibold text-slate-500">
+              <span class="bg-slate-100 px-2 py-0.5 rounded">Avellana</span>
+              <span class="bg-slate-100 px-2 py-0.5 rounded">Chocolate</span>
+              <span class="bg-slate-100 px-2 py-0.5 rounded">Fresa</span>
+            </div>
+          </div>
+
+          <div class="rounded-xl overflow-hidden border border-slate-200 bg-slate-900 text-white relative">
+            <img src="assets/images/chocolates-feria.jpg" alt="Feria del Chocolate" class="w-full h-40 object-cover opacity-80">
+            <div class="p-4">
+              <span class="stitch-badge bg-amber-500 text-slate-950 text-[10px]">FERIA ANUAL</span>
+              <h4 class="font-bold text-sm mt-1">Feria del Chocolate · Mes de Febrero</h4>
+              <p class="text-xs text-slate-300 mt-1">Jornadas de catas a ciegas, talleres infantiles y chocolatada monumental en la calle Real.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hitos Urbanos y Patrimonio Monumental -->
+      <section class="space-y-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">ARQUITECTURA & PAISAJE URBANO</span>
+          <h2 class="text-lg font-bold text-slate-900">Hitos Urbanos y Patrimonio Monumental</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-blue-50 text-blue-800 text-[10px] mb-2">BARROCO POPULAR</span>
+            <h3 class="font-bold text-slate-900 text-sm">Ermita de San Antón</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Nodo devocional levantado en ladrillo y aparejo toledano. Núcleo de las tradicionales bendiciones de animales en enero.</p>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">Calle San Antón · Siglo XVII-XVIII</div>
+          </div>
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-purple-50 text-purple-800 text-[10px] mb-2">RENACIMIENTO CASTELLANO</span>
+            <h3 class="font-bold text-slate-900 text-sm">Santo Domingo de Silos</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Templo parroquial mayor erigido en los siglos XVI y XVII. Nave central con coro alto renacentista y gran retablo mayor manierista.</p>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">Plaza de la Iglesia · Siglo XVI</div>
+          </div>
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-emerald-50 text-emerald-800 text-[10px] mb-2">PULMÓN METROPOLITANO</span>
+            <h3 class="font-bold text-slate-900 text-sm">Parque Juan Carlos I</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Espacio de 55 hectáreas con lago artificial navegable, circuitos deportivos y el parque temático Arqueopinto.</p>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">550.000 m² · Prehistoria y Deporte</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cartografía Municipal Integrada -->
+      <section class="stitch-card p-6">
+        <div class="mb-4">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">CARTOGRAFÍA MUNICIPAL INTEGRADA</span>
+          <h2 class="text-lg font-bold text-slate-900">Distribución del Casco Histórico y Conexiones Urbanas</h2>
+        </div>
+        <div id="map-pinto" class="w-full h-80 rounded-xl border border-slate-200"></div>
+      </section>
+
+      <!-- Conexión y Transporte Territorial -->
+      <section class="stitch-card p-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">CONECTIVIDAD Y RED METROPOLITANA</span>
+        <h2 class="text-lg font-bold text-slate-900 mt-1">Conexión y Transporte Territorial</h2>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-xs font-bold text-purple-700 block">Línea C-3</span>
+            <p class="text-xs text-slate-600 mt-1">Estación céntrica con enlace directo a Madrid-Atocha (20 min) y Sol (25 min). Frecuencia cada 10-15 min en hora punta.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-xs font-bold text-red-700 block">A-4 & M-506</span>
+            <p class="text-xs text-slate-600 mt-1">Salidas inmediatas a la Autovía del Sur (A-4) y transversal a la M-506 hacia Fuenlabrada, Getafe y Móstoles.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-xs font-bold text-blue-700 block">Interurbanos CRTM</span>
+            <p class="text-xs text-slate-600 mt-1">Líneas 421 (Legazpi), 428 (Getafe), 455, 471 y servicio nocturno búho N401.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Banner de Continuación a La Tenería -->
+      <div class="stitch-card p-6 sm:p-8 bg-[#006a58] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-200">SIGUIENTE HITO TERRITORIAL</span>
+          <h3 class="text-xl font-bold mt-1">Continuar a: Barrio La Tenería I y II</h3>
+          <p class="text-xs text-emerald-100 mt-0.5">Explora el ensanche residencial contemporáneo de Pinto, sus bulevares verdes y el IES Calderón de la Barca.</p>
+        </div>
+        <button data-goto="teneria" class="px-6 py-2.5 rounded-full bg-white text-[#006a58] font-bold text-xs shadow hover:bg-emerald-50 transition whitespace-nowrap">
+          Explorar La Tenería &rarr;
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================================
+         VISTA 4: LA TENERÍA (EL BARRIO: LA TENERÍA I Y II)
+         ===================================================================== -->
+    <div id="view-teneria" class="view-panel space-y-10">
+      
+      <!-- Cabecera La Tenería -->
+      <section class="stitch-card p-6 sm:p-8 bg-white">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="stitch-badge bg-emerald-100 text-emerald-900 mb-2">HOME RESIDENCIAL DISTRITO · CÓDIGO POSTAL 28320</span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              El Barrio: La Tenería I y II
+            </h1>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+              Urbanismo contemporáneo, bulevares arbolados, espacios residenciales y vida comunitaria en el norte de Pinto. El modelo de crecimiento estilístico que une naturaleza, salud y educación de vanguardia.
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <button data-goto="ies-calderon" class="px-4 py-2 rounded-full bg-[#006a58] hover:bg-[#005244] text-white text-xs font-semibold shadow-sm transition">
+              IES Calderón de la Barca
+            </button>
+          </div>
+        </div>
+
+        <!-- Métricas del Barrio -->
+        <div class="mt-6 pt-6 border-t border-slate-100 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Superficie Total</span>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-800 mt-0.5">1,42 <span class="text-xs font-normal text-slate-500">km²</span></div>
+            <p class="text-[11px] text-slate-500 mt-1">Crecimiento planeado</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Población Censada</span>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-800 mt-0.5">15.800 <span class="text-xs font-normal text-slate-500">hab.</span></div>
+            <p class="text-[11px] text-slate-500 mt-1">Perfil joven e intergeneracional</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Densidad Demográfica</span>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-800 mt-0.5">9,4 <span class="text-xs font-normal text-slate-500">hab/ha</span></div>
+            <p class="text-[11px] text-slate-500 mt-1">Concepción abierta y verde</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Espacio Verde / Hab</span>
+            <div class="text-xl sm:text-2xl font-extrabold text-emerald-800 mt-0.5">18,5 <span class="text-xs font-normal text-slate-500">m²</span></div>
+            <p class="text-[11px] text-slate-500 mt-1">Muy superior a la media de la CAM</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Estructura y Fases Urbanísticas: Las Dos Fases -->
+      <section class="space-y-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">ESTRUCTURA Y FASES URBANÍSTICAS</span>
+          <h2 class="text-xl font-bold text-slate-900">Dos Fases, un Mismo Compromiso Comunitario</h2>
+          <p class="text-xs text-slate-600 mt-0.5">La Tenería representa la vanguardia del urbanismo pinteño: una articulación armónica entre la primera fase consolidada y la moderna extensión familiar.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Fase I -->
+          <div class="stitch-card overflow-hidden">
+            <div class="h-44 w-full bg-slate-800 relative">
+              <img src="assets/images/teneria-fase1.jpg" alt="La Tenería I" class="w-full h-full object-cover">
+              <div class="absolute top-3 left-3">
+                <span class="stitch-badge bg-emerald-700 text-white text-[10px]">FASE I (2000-2010)</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-base font-bold text-slate-900">La Tenería I (Consolidada)</h3>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                Un tejido residencial armónico y cerrado, caracterizado por manzanas con piscinas interiores, zonas comunes ajardinadas protegidas y un alto indicador de habitabilidad tranquila alrededor de Gabriel Celaya.
+              </p>
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="flex items-start gap-2 text-slate-700">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span><strong>Centro de Salud La Tenería:</strong> En Calle Juan Pablo II.</span>
+                </div>
+                <div class="flex items-start gap-2 text-slate-700">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span><strong>Red de Farmacias de Guardia:</strong> Múltiples despachos integrados.</span>
+                </div>
+                <div class="flex items-start gap-2 text-slate-700">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span><strong>Parque Gabriel Celaya:</strong> Conexión peatonal directa con el corredor ecológico.</span>
+                </div>
+              </div>
+              <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5 text-[10px] text-slate-500">
+                <span class="bg-slate-100 px-2 py-0.5 rounded">Viviendas Comunitarias</span>
+                <span class="bg-slate-100 px-2 py-0.5 rounded">Tráfico Caldeado</span>
+                <span class="bg-slate-100 px-2 py-0.5 rounded">Bajos Comerciales</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fase II -->
+          <div class="stitch-card overflow-hidden">
+            <div class="h-44 w-full bg-slate-800 relative">
+              <img src="assets/images/teneria-fase2.jpg" alt="La Tenería II" class="w-full h-full object-cover">
+              <div class="absolute top-3 left-3">
+                <span class="stitch-badge bg-teal-700 text-white text-[10px]">FASE II (EXPANSIÓN)</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-base font-bold text-slate-900">La Tenería II (Expansión)</h3>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                Diseñada bajo los estándares europeos más exigentes de sostenibilidad: súper urbanizaciones tranquilizadas con calificación energética A, climatización por aerotermia y familias jóvenes.
+              </p>
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="flex items-start gap-2 text-slate-700">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0 mt-0.5"></i>
+                  <span><strong>Sede del IES Calderón de la Barca:</strong> Referente formativo en secundaria y FP.</span>
+                </div>
+                <div class="flex items-start gap-2 text-slate-700">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0 mt-0.5"></i>
+                  <span><strong>Áreas Infantiles Temáticas:</strong> Parques temáticos con suelo elástico de caucho.</span>
+                </div>
+                <div class="flex items-start gap-2 text-slate-700">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0 mt-0.5"></i>
+                  <span><strong>Urbanizaciones Eficientes:</strong> Paneles fotovoltaicos y puntos de recarga eléctrica.</span>
+                </div>
+              </div>
+              <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5 text-[10px] text-slate-500">
+                <span class="bg-slate-100 px-2 py-0.5 rounded">Sostenible</span>
+                <span class="bg-slate-100 px-2 py-0.5 rounded">Demografía Joven</span>
+                <span class="bg-slate-100 px-2 py-0.5 rounded">Urbanismo Abierto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Movilidad Sostenible y Grandes Bulevares -->
+      <section class="stitch-card p-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">EJES VERTEBRADORES</span>
+        <h2 class="text-lg font-bold text-slate-900 mt-1">Movilidad Sostenible y Grandes Bulevares</h2>
+        <p class="text-xs text-slate-600 mt-0.5">A diferencia de los cascos antiguos densos, La Tenería fue concebida desde el peatón y la micromovilidad con prioridad absoluta.</p>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-5 rounded-xl border border-slate-200 bg-white">
+            <h3 class="font-bold text-slate-900 text-sm">Calle Juan Pablo II · Columna Cívica</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Conecta de este a oeste el corazón del barrio. Aceras peatonales de más de 4 metros con plátanos de sombra y almendros, terrazas gastronómicas y centro de salud.</p>
+            <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+              <div class="p-2 bg-slate-50 rounded">
+                <span class="block text-[10px] text-slate-400">Circulación</span>
+                <strong>Doble sentido</strong>
+              </div>
+              <div class="p-2 bg-slate-50 rounded">
+                <span class="block text-[10px] text-slate-400">Aceras</span>
+                <strong>Lineal > 4 m</strong>
+              </div>
+              <div class="p-2 bg-slate-50 rounded">
+                <span class="block text-[10px] text-slate-400">Arbolado</span>
+                <strong>> 950 uds.</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-slate-200 bg-white">
+            <h3 class="font-bold text-slate-900 text-sm">Calle Manuel de Falla · Eje Escolar</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Arteria estructurante de La Tenería II que conduce de forma despejada y segura hacia los equipamientos escolares y las instalaciones del IES Calderón de la Barca.</p>
+            <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+              <div class="p-2 bg-emerald-50 rounded text-emerald-900">
+                <span class="block text-[10px] text-emerald-700">Aceras</span>
+                <strong>40%</strong>
+              </div>
+              <div class="p-2 bg-teal-50 rounded text-teal-900">
+                <span class="block text-[10px] text-teal-700">Carril Bici</span>
+                <strong>15%</strong>
+              </div>
+              <div class="p-2 bg-slate-50 rounded text-slate-700">
+                <span class="block text-[10px] text-slate-400">Tráfico</span>
+                <strong>45%</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Zonas Verdes y Esparcimiento Activo -->
+      <section class="space-y-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">ESPACIOS DEPORTIVOS & AMBIENTALES</span>
+          <h2 class="text-lg font-bold text-slate-900">Zonas Verdes y Esparcimiento Activo</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="stitch-card overflow-hidden">
+            <img src="assets/images/parque-gabriel-celaya.jpg" alt="Parque Gabriel Celaya" class="w-full h-44 object-cover">
+            <div class="p-5">
+              <span class="stitch-badge bg-emerald-100 text-emerald-900 text-[10px] mb-2">PULMÓN SOCIAL</span>
+              <h3 class="font-bold text-slate-900 text-sm">Parque Gabriel Celaya</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">El gran punto de encuentro social de los vecinos del distrito. Praderas de césped natural, pérgolas de madera laminada, áreas de calistenia y juegos infantiles homologados.</p>
+            </div>
+          </div>
+
+          <div class="stitch-card overflow-hidden">
+            <img src="assets/images/senda-culebro.jpg" alt="Senda Ecológica del Culebro" class="w-full h-44 object-cover">
+            <div class="p-5">
+              <span class="stitch-badge bg-teal-100 text-teal-900 text-[10px] mb-2">CONEXIÓN ESPACIO VERDE</span>
+              <h3 class="font-bold text-slate-900 text-sm">Senda Ecológica del Culebro</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">Ruta naturalizada que flanquea el barrio hacia el noroeste, enlazando la trama urbana con el curso fluvial del Arroyo Culebro. Circuito ideal de running y observación de avifauna.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comercio de Proximidad en Bajos Abiertos -->
+      <section class="stitch-card p-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">VIDA EN EL BARRIO</span>
+        <h2 class="text-lg font-bold text-slate-900 mt-1">Comercio de Proximidad en Bajos Abiertos</h2>
+
+        <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="coffee" class="w-5 h-5 text-amber-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900">Panaderías & Cafés</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Masas madre, bollería casera y desayunos de barrio.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="apple" class="w-5 h-5 text-emerald-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900">Fruterías & Mercado</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Fruta fresca de temporada, carnicerías y producto bio.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="activity" class="w-5 h-5 text-blue-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900">Salud & Cuidados</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Clínicas dentales, farmacias, ópticas y fisioterapia.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="utensils" class="w-5 h-5 text-orange-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900">Terrazas & Gastro</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Cervecerías modernas, tapas y vermús familiares.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cartografía La Tenería -->
+      <section class="stitch-card p-6">
+        <div class="mb-4">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">CARTOGRAFÍA TERRITORIAL</span>
+          <h2 class="text-lg font-bold text-slate-900">Localización de Hitos en La Tenería</h2>
+        </div>
+        <div id="map-teneria" class="w-full h-80 rounded-xl border border-slate-200"></div>
+      </section>
+
+      <!-- Banner a IES Calderón -->
+      <div class="stitch-card p-6 sm:p-8 bg-[#006a58] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-200">EQUIPAMIENTO EDUCATIVO PRINCIPAL</span>
+          <h3 class="text-xl font-bold mt-1">IES Calderón de la Barca</h3>
+          <p class="text-xs text-emerald-100 mt-0.5">Explora la oferta pedagógica, bilingüismo, ciclos formativos de FP informática y vida comunitaria.</p>
+        </div>
+        <button data-goto="ies-calderon" class="px-6 py-2.5 rounded-full bg-white text-[#006a58] font-bold text-xs shadow hover:bg-emerald-50 transition whitespace-nowrap">
+          Continuar a: IES Calderón de la Barca &rarr;
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================================
+         VISTA 5: IES CALDERÓN DE LA BARCA – PINTO
+         ===================================================================== -->
+    <div id="view-ies-calderon" class="view-panel space-y-10">
+      
+      <!-- Cabecera IES Calderón -->
+      <section class="stitch-card p-6 sm:p-8 bg-white">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="stitch-badge bg-emerald-100 text-emerald-900 mb-2">ENSEÑANZA SECUNDARIA · BACHILLERATO · FP | LA TENERÍA</span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              IES Calderón de la Barca – Pinto
+            </h1>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+              Instituto de Educación Secundaria Bilingüe y centro de referencia educativa y tecnológica en La Tenería.
+            </p>
+          </div>
+          <div class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <div><i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600 inline mr-1"></i> Calle Asturias, s/n, La Tenería</div>
+            <div class="mt-1"><i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-600 inline mr-1"></i> Jornada matutina: 08:30 – 15:00 h</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hero con Foto y Hub Tecnológico -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8 stitch-card overflow-hidden">
+          <div class="h-64 sm:h-72 w-full bg-slate-900 relative">
+            <img src="assets/images/ies-calderon.jpg" alt="Fachada IES Calderón de la Barca" class="w-full h-full object-cover">
+            <div class="absolute bottom-4 left-4 bg-slate-950/80 backdrop-blur-sm px-3 py-1.5 rounded-lg text-white text-xs font-semibold">
+              Edificio Principal · Barrio La Tenería II
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 stitch-card p-6 bg-gradient-to-br from-blue-50/50 via-white to-slate-50 border-blue-200">
+          <span class="stitch-badge bg-blue-100 text-blue-900 text-[10px] mb-2">ECOSISTEMA TECNOLÓGICO</span>
+          <h3 class="text-base font-bold text-slate-900">Hub Informático Comarcal</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            Sede oficial de formación técnica especializada en redes, arquitecturas y desarrollo en el eje sur metropolitano. Bolsa FCT concertada con las principales empresas tecnológicas de la Comunidad de Madrid.
+          </p>
+          <div class="mt-4 pt-4 border-t border-blue-100 space-y-1.5 text-xs text-blue-900 font-medium">
+            <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i> Grado Medio: SMR</div>
+            <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i> Grado Superior: DAM (Multiplataforma)</div>
+            <div class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-600"></i> Grado Superior: DAW (Web)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Oferta Curricular y Etapas -->
+      <section class="space-y-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">ESTRUCTURA ACADÉMICA OFICIAL</span>
+          <h2 class="text-lg font-bold text-slate-900">Oferta Curricular y Etapas</h2>
+          <p class="text-xs text-slate-500">Itinerarios pedagógicos integrados que abarcan desde la educación general obligatoria hasta la especialización técnica avanzada.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- ESO -->
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-emerald-100 text-emerald-900 text-[10px] mb-2">ETAPA OBLIGATORIA</span>
+            <h3 class="font-bold text-slate-900 text-sm">Educación Secundaria Obligatoria (ESO)</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Tronco común de 1º a 4º de la ESO enfocado en la madurez intelectual, cívica y científica del alumnado. Programa Bilingüe de la CAM.</p>
+            <div class="mt-3 text-xs text-slate-500 space-y-1">
+              <div>• Zonas de refuerzo instrumental (Matemáticas y Lengua)</div>
+              <div>• Orientación vocacional activa en 3º y 4º</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-bold uppercase">Cursos: 1º, 2º, 3º, 4º ESO</div>
+          </div>
+
+          <!-- Bachillerato -->
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-blue-100 text-blue-900 text-[10px] mb-2">ETAPA POSTOBLIGATORIA</span>
+            <h3 class="font-bold text-slate-900 text-sm">Bachillerato</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Modalidades de Ciencias y Tecnología y Humanidades y Ciencias Sociales. Rigor curricular con máximo éxito en pruebas EvAU.</p>
+            <div class="mt-3 text-xs text-slate-500 space-y-1">
+              <div>• Preparación específica para las Pruebas de Acceso a la Universidad</div>
+              <div>• Seguimiento tutorial personalizado</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-bold uppercase">Modalidades: CC.TT. / HH.CC.SS.</div>
+          </div>
+
+          <!-- FP Informática -->
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px] mb-2">FORMACIÓN TÉCNICA</span>
+            <h3 class="font-bold text-slate-900 text-sm">Formación Profesional (Informática)</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Especialización reglada con alta demanda en el mercado tecnológico: administración de sistemas, programación web y móvil.</p>
+            <div class="mt-3 text-xs text-slate-500 space-y-1">
+              <div>• Prácticas FCT concertadas con multinacionales</div>
+              <div>• Laboratorios con hardware y servidores propios</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[10px] text-slate-400 font-bold uppercase">Títulos: SMR + DAM + DAW</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Instalaciones y Recursos Educativos -->
+      <section class="stitch-card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">INFRAESTRUCTURAS Y ESPACIOS</span>
+            <h2 class="text-lg font-bold text-slate-900">Instalaciones y Recursos</h2>
+          </div>
+          <span class="stitch-badge bg-slate-100 text-slate-600 text-[10px]">Accesibilidad Universal</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="monitor" class="w-5 h-5 text-blue-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900 text-xs">Laboratorios Tecnológicos</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Salas de ordenadores Gigabit de alto rendimiento para desarrollo de software y redes.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="book-open" class="w-5 h-5 text-emerald-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900 text-xs">Biblioteca y Préstamo Digital</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Más de 12.000 volúmenes de consulta y literatura juvenil integrada en eBiblio.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="trophy" class="w-5 h-5 text-amber-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900 text-xs">Pabellón Cubierto y Pistas</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Polideportivo cerrado con vestuarios y canchas de fútbol sala, voleibol y baloncesto.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="sprout" class="w-5 h-5 text-emerald-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900 text-xs">Huerto Escolar Ecológico</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Parcela pedagógica al aire libre gestionada por el alumnado de Biología con riego por goteo.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="cpu" class="w-5 h-5 text-teal-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900 text-xs">Aula STEAM y Prototipado</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Impresoras 3D, robótica Arduino, placas micro:bit y diseño digital colaborativo.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <i data-lucide="heart-handshake" class="w-5 h-5 text-rose-600 mb-2"></i>
+            <h4 class="font-bold text-slate-900 text-xs">AMPA & Proyectos Ecosociales</h4>
+            <p class="text-[11px] text-slate-500 mt-1">Comunidad activa de familias, banco de libros de texto y charlas de ciberseguridad.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ubicación y Secretaría -->
+      <section class="stitch-card p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 space-y-4">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">ATENCIÓN CIUDADANA Y SECRETARÍA</span>
+            <h3 class="text-base font-bold text-slate-900">Horarios y Contacto Institucional</h3>
+
+            <div class="space-y-3 text-xs">
+              <div class="p-3 bg-slate-50 rounded-lg">
+                <span class="font-bold text-slate-700 block">Jornada Escolar Lectiva</span>
+                <span class="text-slate-500">08:30 – 15:00 h (Lunes a Viernes)</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg">
+                <span class="font-bold text-slate-700 block">Atención Secretaría Presencial</span>
+                <span class="text-slate-500">09:00 – 13:00 h (Lunes a Viernes)</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg">
+                <span class="font-bold text-slate-700 block">Teléfono de Secretaría</span>
+                <a href="tel:916928490" class="text-emerald-700 font-bold hover:underline">+34 91 692 84 90</a>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg">
+                <span class="font-bold text-slate-700 block">Correo Electrónico Oficial</span>
+                <a href="mailto:ies.calderondelabarca.pinto@educa.madrid.org" class="text-emerald-700 font-medium hover:underline break-all">ies.calderondelabarca.pinto@educa.madrid.org</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <div id="map-calderon" class="w-full h-72 rounded-xl border border-slate-200"></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- =====================================================================
+         VISTA 6: NATURALEZA Y DEPORTE (RUTAS, ESPACIOS VERDES Y EQUIPAMIENTOS)
+         ===================================================================== -->
+    <div id="view-naturaleza" class="view-panel space-y-10">
+      
+      <!-- Cabecera Naturaleza -->
+      <section class="stitch-card p-6 sm:p-8 bg-white">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="stitch-badge bg-emerald-100 text-emerald-900 mb-2">PATRIMONIO NATURAL & RED ACTIVA</span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              Naturaleza, Rutas y Deportes al Aire Libre en Pinto
+            </h1>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+              Red de corredores biológicos periurbanos, grandes áreas metropolitanas de recreo y una infraestructura consolidada de sendas cicloturistas que unen el casco histórico con el Parque Regional del Sureste y las llanuras esteparias madrileñas.
+            </p>
+          </div>
+          <!-- Stats de Espacios Verdes -->
+          <div class="flex gap-4">
+            <div class="p-3 bg-slate-50 rounded-xl text-center">
+              <span class="text-xl sm:text-2xl font-extrabold text-emerald-800 block">55 ha</span>
+              <span class="text-[10px] uppercase font-bold text-slate-400">Pq. Juan Carlos I</span>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl text-center">
+              <span class="text-xl sm:text-2xl font-extrabold text-emerald-800 block">12 km</span>
+              <span class="text-[10px] uppercase font-bold text-slate-400">Sendas Ciclistas</span>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl text-center">
+              <span class="text-xl sm:text-2xl font-extrabold text-emerald-800 block">4</span>
+              <span class="text-[10px] uppercase font-bold text-slate-400">Áreas Multideporte</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección 01: Grandes Espacios Verdes Periurbanos -->
+      <section class="space-y-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">SECCIÓN 01 · INFRAESTRUCTURA VERDE</span>
+          <h2 class="text-lg font-bold text-slate-900">Grandes Espacios Verdes Periurbanos</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Parque Juan Carlos I -->
+          <div class="lg:col-span-8 stitch-card overflow-hidden">
+            <div class="h-64 sm:h-72 w-full relative">
+              <img src="assets/images/parque-juan-carlos-1.jpg" alt="Parque Juan Carlos I" class="w-full h-full object-cover">
+              <div class="absolute top-4 left-4">
+                <span class="stitch-badge bg-emerald-800 text-white text-[10px]">Espacio Central · 550.000 m²</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">PULMÓN METROPOLITANO DEL MUNICIPIO</span>
+              <h3 class="text-base font-bold text-slate-900 mt-0.5">Parque Municipal Juan Carlos I</h3>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                El mayor núcleo vegetal y recreativo de Pinto. Integra una amplia lámina de agua artificial navegable con graderío, circuitos perimetrales de carrera continua sobre tierra, pista reglamentaria de patinaje y amplias praderas que conectan de forma natural con el <strong>Parque Arqueológico Gonzalo Arteaga (Arqueopinto)</strong>, un enclave educativo dedicado a la prehistoria peninsular.
+              </p>
+              <div class="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div><span class="text-slate-400 block text-[10px]">Superficie</span> <strong>55 Hectáreas</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">Lámina de agua</span> <strong>Lago artificial</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">Museología</span> <strong>Arqueopinto</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">Pista</span> <strong>Patinaje libre</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parque Gabriel Celaya Mapa -->
+          <div class="lg:col-span-4 stitch-card p-6 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">EJE CÍVICO RESIDENCIAL</span>
+              <h3 class="text-base font-bold text-slate-900 mt-1">Parque Gabriel Celaya</h3>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                Centro lúdico y deportivo del ensanche norte de La Tenería. Praderas abiertas con drenaje sostenible, áreas de juegos infantiles adaptadas y calistenia al aire libre.
+              </p>
+            </div>
+            <div class="mt-4 rounded-xl overflow-hidden border border-slate-200">
+              <img src="assets/images/mapa-gabriel-celaya.jpg" alt="Distribución Gabriel Celaya" class="w-full h-36 object-cover">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección 02: Rutas Senderistas y Cicloturismo -->
+      <section class="space-y-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">SECCIÓN 02 · RED DE ITINERARIOS</span>
+          <h2 class="text-lg font-bold text-slate-900">Rutas Senderistas y Cicloturismo</h2>
+          <p class="text-xs text-slate-500">Senderos interconectados con tipología de terreno consolidado, idóneos para atletismo, BTT no técnica y marchas nórdicas.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-emerald-100 text-emerald-900 text-[10px] mb-2">CORREDOR FLUVIAL</span>
+            <h3 class="font-bold text-slate-900 text-sm">Senda Ecológica del Arroyo Culebro</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Corredor biológico fluvial de tierra compactada en el límite septentrional conectando con Getafe. Avifauna y fresnedas con trazado plano.</p>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between text-xs font-semibold text-slate-700">
+              <span>Longitud: 5,6 km</span>
+              <span>Perfil: Llano</span>
+            </div>
+          </div>
+
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px] mb-2">ESTEPA Y CORTADOS</span>
+            <h3 class="font-bold text-slate-900 text-sm">Conexión Parque Regional del Sureste</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Itinerario rural hacia las terrazas yesíferas del Jarama. Alberga retamares y espartales protegidos en el Espacio Red Natura 2000.</p>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between text-xs font-semibold text-slate-700">
+              <span>Longitud: 14,2 km</span>
+              <span>Perfil: Medio</span>
+            </div>
+          </div>
+
+          <div class="stitch-card p-5">
+            <span class="stitch-badge bg-blue-100 text-blue-900 text-[10px] mb-2">MOVILIDAD ACTIVA</span>
+            <h3 class="font-bold text-slate-900 text-sm">Anillo Verde Urbano y La Tenería</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">Circunvalación ciclista segregada del tráfico a motor. Enlaza los bulevares arbolados con colegios y parques.</p>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between text-xs font-semibold text-slate-700">
+              <span>Longitud: 8,8 km</span>
+              <span>Urbano segregado</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección 03: Instalaciones Deportivas Públicas -->
+      <section class="stitch-card p-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">SECCIÓN 03 · EQUIPAMIENTO PÚBLICO</span>
+        <h2 class="text-lg font-bold text-slate-900 mt-1">Instalaciones Deportivas Públicas y Actividad Libre</h2>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <h4 class="font-bold text-slate-900 text-xs">Polideportivo Príncipes de Asturias</h4>
+            <p class="text-xs text-slate-600 mt-1">Pabellón cubierto para baloncesto, balonmano y fútbol sala, pistas de pádel y campos de fútbol de césped artificial.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <h4 class="font-bold text-slate-900 text-xs">Módulos de Calistenia & Workout</h4>
+            <p class="text-xs text-slate-600 mt-1">Barras paralelas, espalderas y anillas con suelo amortiguador en el Parque Gabriel Celaya y Juan Pablo II, abiertos 24h.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <h4 class="font-bold text-slate-900 text-xs">Rocódromo & Pistas Multiuso</h4>
+            <p class="text-xs text-slate-600 mt-1">Muros de escalada en bloque (boulder), canchas vecinales de mini-básquet y fútbol rápido perimetradas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Explorar Siguiente: Gastronomía -->
+      <div class="stitch-card p-6 sm:p-8 bg-[#006a58] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-200">SABORES Y TRADICIÓN</span>
+          <h3 class="text-xl font-bold mt-1">Guía Gastronómica y Sabores de Pinto</h3>
+          <p class="text-xs text-emerald-100 mt-0.5">Descubre los célebres 'Ombligos de Pinto', la tradición chocolatera desde 1854 y la cultura de tapeo.</p>
+        </div>
+        <button data-goto="gastronomia" class="px-6 py-2.5 rounded-full bg-white text-[#006a58] font-bold text-xs shadow hover:bg-emerald-50 transition whitespace-nowrap">
+          Ver Gastronomía &rarr;
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================================
+         VISTA 7: GASTRONOMÍA (SABORES DE PINTO, OMBLIGOS Y HOSTELERÍA)
+         ===================================================================== -->
+    <div id="view-gastronomia" class="view-panel space-y-10">
+      
+      <!-- Cabecera Gastronomía -->
+      <section class="stitch-card p-6 sm:p-8 bg-white">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <span class="stitch-badge bg-amber-100 text-amber-900 mb-2">TRADICIÓN DULCE & PINTO DE TAPEO</span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              Gastronomía Local y Tradición Repostera: Sabores de Pinto
+            </h1>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              De la cuna del chocolate madrileño con el legado histórico de La Colonial y Eureka hasta el ritual castizo del vermú y los torreznos en la Plaza de la Constitución; la vida pinteña convida al paseante a vivir entre el recetario castellano y las modernas terrazas de La Tenería.
+            </p>
+          </div>
+          <!-- Hero Photo Ombligos -->
+          <div class="lg:w-80 stitch-card overflow-hidden shrink-0">
+            <img src="assets/images/ombligos-pinto.jpg" alt="Ombligos de Pinto" class="w-full h-40 object-cover">
+            <div class="p-3 bg-slate-50 text-[11px] font-bold text-slate-700 flex items-center justify-between">
+              <span>Marca Protegida: Patente Oficial</span>
+              <i data-lucide="award" class="w-4 h-4 text-amber-600"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección 01: Emblemas Dulces y Tradición Chocolatera -->
+      <section class="space-y-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-800">SECCIÓN 01 · REPOSTERÍA CON HISTORIA</span>
+          <h2 class="text-lg font-bold text-slate-900">Emblemas Dulces y Tradición Chocolatera</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Los Ombligos de Pinto Detalle -->
+          <div class="lg:col-span-7 stitch-card p-6 bg-gradient-to-br from-amber-50/40 via-white to-slate-50 border-amber-200">
+            <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px] mb-2">RECETA OFICIAL REGISTRADA</span>
+            <h3 class="text-lg font-bold text-slate-900">Los 'Ombligos de Pinto': Geografía en Forma de Dulce</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Inspirado en la consideración histórica y popular de Pinto como el "ombligo" o centro peninsular de España. Este dulce de autor se elabora con una masa sablé crujiente y mantecada que envuelve un corazón untuoso. Aunque el clásico indiscutible es el de chocolate negro pinteño, los obradores han enriquecido la familia con praliné de avellana tostada y confituras de fresa natural.
+            </p>
+
+            <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+              <div class="p-2 bg-white rounded border border-amber-200">
+                <span class="text-[10px] text-slate-400 block">Masa Sablé</span>
+                <strong class="text-amber-950">Mantequilla y almendra</strong>
+              </div>
+              <div class="p-2 bg-white rounded border border-amber-200">
+                <span class="text-[10px] text-slate-400 block">Relleno Real</span>
+                <strong class="text-amber-950">Ganache 70% cacao</strong>
+              </div>
+              <div class="p-2 bg-white rounded border border-amber-200">
+                <span class="text-[10px] text-slate-400 block">Variedades</span>
+                <strong class="text-amber-950">Fresa & Praliné</strong>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-amber-100">
+              <h4 class="text-xs font-bold text-slate-800 mb-2">Dónde Encontrarlos (Obradores Autorizados):</h4>
+              <ul class="text-xs text-slate-600 space-y-1">
+                <li>📍 <strong>Pastelería Éboli:</strong> Plaza de la Constitución, 4 (Obrador pionero)</li>
+                <li>📍 <strong>Pastelería Los Galerones:</strong> Calle Vicente María del Pozo</li>
+                <li>📍 <strong>Obrador San José:</strong> Calle Egido de la Fuente</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Villa del Chocolate 1854 & Feria -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="stitch-card p-6 bg-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">PIONEROS (1854)</span>
+              <h3 class="text-sm font-bold text-slate-900 mt-1">Pinto: La Villa del Chocolate</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                En 1854, la llegada de don Melquiades Sánchez de la Fuente y la fundación de <em>La Colonial</em> inauguraron un vínculo indisoluble. A este marco se sumaría la fábrica de <em>Chocolates Eureka</em>.
+              </p>
+            </div>
+
+            <div class="stitch-card p-6 bg-slate-900 text-white">
+              <span class="stitch-badge bg-amber-500 text-slate-950 text-[10px] mb-2">FERIA ANUAL</span>
+              <h3 class="text-sm font-bold">Feria Anual del Chocolate · Mes de Febrero</h3>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                Jornadas de catas a ciegas, talleres infantiles de bombonería y la gran chocolatada popular en la calle Real.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección 02: Cultura de Barra y Tapeo Tradicional -->
+      <section class="stitch-card p-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">SECCIÓN 02 · RUTA DE LA TAPA</span>
+        <h2 class="text-lg font-bold text-slate-900 mt-1">Cultura de Barra y Tapeo Tradicional</h2>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase text-amber-700">BARRA ESPECIAL</span>
+            <h4 class="font-bold text-slate-900 text-xs mt-1">Torreznos Castellanos</h4>
+            <p class="text-xs text-slate-600 mt-1">Panceta fresca adobada y frita con doble temperatura: corteza crujiente y magro tierno.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase text-amber-700">TAPA REINA</span>
+            <h4 class="font-bold text-slate-900 text-xs mt-1">Oreja al Ajillo & Bravas</h4>
+            <p class="text-xs text-slate-600 mt-1">Cazuelitas de barro con oreja a la plancha dorada con salsa brava casera y pimentón de la Vera.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl">
+            <span class="text-[10px] font-bold uppercase text-amber-700">D.O. VINOS DE MADRID</span>
+            <h4 class="font-bold text-slate-900 text-xs mt-1">Bodegas San Martín / Arganda</h4>
+            <p class="text-xs text-slate-600 mt-1">Garnachas y tempranillos de viñedos centenarios de la comarca del Tajo-Jarama.</p>
+          </div>
+        </div>
+
+        <!-- Banner Ruta Anual de la Tapa -->
+        <div class="mt-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#006a58] text-white flex items-center justify-center shrink-0">
+              <i data-lucide="utensils" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-xs sm:text-sm">Ruta Anual de la Tapa de Pinto (Mes de Abril)</h4>
+              <p class="text-xs text-slate-600">Más de 35 establecimientos compitiendo por la codiciada Tapa de Oro.</p>
+            </div>
+          </div>
+          <button class="px-4 py-2 rounded-full bg-[#006a58] text-white text-xs font-semibold whitespace-nowrap shadow-sm hover:bg-[#005244]">
+            Descargar Plano de la Tapa
+          </button>
+        </div>
+      </section>
+
+      <!-- Sección 03: Terrazas y Gastronomía en La Tenería -->
+      <section class="stitch-card p-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">SECCIÓN 03 · RESTAURACIÓN MODERNA</span>
+        <h2 class="text-lg font-bold text-slate-900 mt-1">Terrazas y Gastronomía Contemporánea en La Tenería</h2>
+
+        <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 rounded-xl overflow-hidden">
+            <img src="assets/images/terrazas-teneria.jpg" alt="Terrazas en La Tenería" class="w-full h-48 object-cover">
+          </div>
+          <div class="lg:col-span-7 space-y-3">
+            <div class="p-3 bg-slate-50 rounded-xl">
+              <h4 class="font-bold text-slate-900 text-xs">Cafeterías de Especialidad & Brunch</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Granos arábica seleccionados, tostadas de masa madre, zumos cold-press y bowls de açaí.</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl">
+              <h4 class="font-bold text-slate-900 text-xs">Gastrobares y Cocina Fusión</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Hamburguesas gourmet, tatakis, tacos mexicanos y raciones modernas con vinos de autor.</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl">
+              <h4 class="font-bold text-slate-900 text-xs">Heladerías & Pastelería Moderna</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Helados artesanales con leche de granja y gofres belgas en bulevares peatonales.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Guía de Hostelería y Obradores de Proximidad con Filtros -->
+      <section class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800">DIRECTORIO CULINARIO</span>
+            <h2 class="text-lg font-bold text-slate-900">Guía de Hostelería y Obradores de Proximidad</h2>
+          </div>
+          
+          <!-- Filtros del Directorio -->
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <button class="dir-filter-btn px-3 py-1.5 rounded-full bg-[#006a58] text-white font-semibold transition" data-category="all">Todos (12)</button>
+            <button class="dir-filter-btn px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition" data-category="pasteleria">Pastelerías & Cafés</button>
+            <button class="dir-filter-btn px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition" data-category="tapeo">Tapeo & Casco Antiguo</button>
+            <button class="dir-filter-btn px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition" data-category="teneria">La Tenería</button>
+          </div>
+        </div>
+
+        <!-- Tarjetas del Directorio -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Pastelería Éboli -->
+          <div class="stitch-card p-5 directory-card flex flex-col justify-between" data-category="pasteleria">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px]">OBRADOR CENTENARIO</span>
+                <span class="text-xs font-bold text-amber-600 flex items-center gap-1">★ 4.9</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mt-2">Pastelería Éboli</h3>
+              <p class="text-xs text-slate-600 mt-1">Obrador pionero oficial de los auténticos 'Ombligos de Pinto' y hojaldres finos.</p>
+              <div class="mt-3 text-[11px] text-slate-500 space-y-0.5">
+                <div>📍 Plaza de la Constitución, 4 (Centro)</div>
+                <div>🕒 M-D: 08:30 – 14:00 y 17:00 – 20:30</div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Gasto aprox: €€</span>
+              <button class="favorite-btn text-slate-300 hover:text-rose-500 transition" data-fav-id="pasteleria-eboli">
+                <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mesón Tradicional El Retorno -->
+          <div class="stitch-card p-5 directory-card flex flex-col justify-between" data-category="tapeo">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="stitch-badge bg-red-100 text-red-900 text-[10px]">TABERNA CASTELLANA</span>
+                <span class="text-xs font-bold text-amber-600 flex items-center gap-1">★ 4.7</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mt-2">Mesón Tradicional El Retorno</h3>
+              <p class="text-xs text-slate-600 mt-1">Torreznos crujientes al corte, oreja a la plancha dorada y asados castellanos en horno de leña.</p>
+              <div class="mt-3 text-[11px] text-slate-500 space-y-0.5">
+                <div>📍 Calle Maestra María del Rosario, 12</div>
+                <div>🕒 X-D: 12:00 – 16:30 / 19:30 – 23:30</div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Gasto aprox: €€</span>
+              <button class="favorite-btn text-slate-300 hover:text-rose-500 transition" data-fav-id="meson-retorno">
+                <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bulevar Lounge & Tapas -->
+          <div class="stitch-card p-5 directory-card flex flex-col justify-between" data-category="teneria">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="stitch-badge bg-blue-100 text-blue-900 text-[10px]">TERRAZA EN BULEVAR</span>
+                <span class="text-xs font-bold text-amber-600 flex items-center gap-1">★ 4.8</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mt-2">Bulevar Lounge & Tapas</h3>
+              <p class="text-xs text-slate-600 mt-1">Terrazas climatizadas con vistas arboladas, cócteles de autor y tapas contemporáneas.</p>
+              <div class="mt-3 text-[11px] text-slate-500 space-y-0.5">
+                <div>📍 Bulevar Juan Pablo II, 18 (La Tenería)</div>
+                <div>🕒 L-D: 10:00 – 00:30 (Ininterrumpido)</div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Gasto aprox: €€</span>
+              <button class="favorite-btn text-slate-300 hover:text-rose-500 transition" data-fav-id="bulevar-lounge">
+                <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Obrador Los Galerones -->
+          <div class="stitch-card p-5 directory-card flex flex-col justify-between" data-category="pasteleria">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="stitch-badge bg-amber-100 text-amber-900 text-[10px]">REPOSTERÍA TRADICIONAL</span>
+                <span class="text-xs font-bold text-amber-600 flex items-center gap-1">★ 4.7</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mt-2">Obrador Los Galerones</h3>
+              <p class="text-xs text-slate-600 mt-1">Pastas de té de mantequilla fina, tartas conmemorativas y ombligos rellenos de fresa.</p>
+              <div class="mt-3 text-[11px] text-slate-500 space-y-0.5">
+                <div>📍 Calle Vicente María del Pozo, 8</div>
+                <div>🕒 L-S: 08:30 – 14:00 / 17:00 – 20:00</div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Gasto aprox: €</span>
+              <button class="favorite-btn text-slate-300 hover:text-rose-500 transition" data-fav-id="obrador-galerones">
+                <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cervecería de la Villa -->
+          <div class="stitch-card p-5 directory-card flex flex-col justify-between" data-category="tapeo">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="stitch-badge bg-emerald-100 text-emerald-900 text-[10px]">PLAZA MAYOR</span>
+                <span class="text-xs font-bold text-amber-600 flex items-center gap-1">★ 4.6</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mt-2">Cervecería de la Villa</h3>
+              <p class="text-xs text-slate-600 mt-1">Cervezas de grifo con tiraje perfecto, patatas bravas caseras con salsa secreta y tabla ibérica.</p>
+              <div class="mt-3 text-[11px] text-slate-500 space-y-0.5">
+                <div>📍 Plaza de la Constitución, 1</div>
+                <div>🕒 M-D: 11:30 – 16:00 / 19:00 – 00:00</div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Gasto aprox: €</span>
+              <button class="favorite-btn text-slate-300 hover:text-rose-500 transition" data-fav-id="cerveceria-villa">
+                <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Café & Crema Tenería -->
+          <div class="stitch-card p-5 directory-card flex flex-col justify-between" data-category="teneria">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="stitch-badge bg-teal-100 text-teal-900 text-[10px]">ESPECIALIDAD & DESAYUNO</span>
+                <span class="text-xs font-bold text-amber-600 flex items-center gap-1">★ 4.8</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mt-2">Café & Crema Tenería</h3>
+              <p class="text-xs text-slate-600 mt-1">Punto de reunión vecinal frente al IES con café de especialidad, zumos recién exprimidos y brunch.</p>
+              <div class="mt-3 text-[11px] text-slate-500 space-y-0.5">
+                <div>📍 Calle Manuel de Falla, 14 (La Tenería)</div>
+                <div>🕒 L-V: 07:30 – 20:00 | S-D: 08:30 – 14:00</div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Gasto aprox: €€</span>
+              <button class="favorite-btn text-slate-300 hover:text-rose-500 transition" data-fav-id="cafe-crema-teneria">
+                <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================================================================
+       PIE DE PÁGINA INSTITUCIONAL / FOOTER
+       ========================================================================= -->
+  <footer class="mt-16 bg-white border-t border-slate-200 py-12 text-slate-600 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-[#006a58] text-white flex items-center justify-center">
+              <i data-lucide="compass" class="w-4 h-4"></i>
+            </div>
+            <span class="font-extrabold text-slate-900 text-sm">Plataforma Territorial</span>
+          </div>
+          <p class="text-slate-500 text-xs leading-relaxed">
+            Ecosistema de datos abiertos, participación cívica y cartografía social interconectada desde el marco autonómico hasta el entorno de La Tenería y el IES Calderón de la Barca.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3">Navegación Territorial</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button data-goto="espana" class="hover:text-emerald-700">Ámbito Estatal (España)</button></li>
+            <li><button data-goto="pinto" class="hover:text-emerald-700">Municipio de Pinto</button></li>
+            <li><button data-goto="teneria" class="hover:text-emerald-700">Barrio Residencial La Tenería</button></li>
+            <li><button data-goto="ies-calderon" class="hover:text-emerald-700">IES Calderón de la Barca</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3">Guías Específicas</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button data-goto="naturaleza" class="hover:text-emerald-700">Rutas de Naturaleza & Deporte</button></li>
+            <li><button data-goto="gastronomia" class="hover:text-emerald-700">Guía Gastronómica & Hostelería</button></li>
+            <li><a href="procedimiento.html" class="hover:text-emerald-700 font-semibold text-emerald-800 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600"></i> Cómo se hizo (Prompts & IAs)</a></li>
+            <li><a href="#" class="open-search-btn hover:text-emerald-700">Buscador Cartográfico</a></li>
+            <li><a href="#" class="download-pdf-btn hover:text-emerald-700">Descargar Guía Oficial en PDF</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3">Institucional & Legal</h4>
+          <ul class="space-y-2 text-xs text-slate-500">
+            <li>Portal de Transparencia Municipal</li>
+            <li>Aviso Legal y Privacidad de Datos</li>
+            <li>Mapa de Recursos Educativos</li>
+            <li>Contacto y Soporte Territorial</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-8 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
+        <div>
+          © 2024–2026 Guía Territorial Pinto · Comunidad Educativa y Vecinal La Tenería.
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Sistema Federado</span>
+          <span>•</span>
+          <span>Pinto, Comunidad de Madrid</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- =========================================================================
+       BARRA DE NAVEGACIÓN MÓVIL INFERIOR (BOTTOM BAR NATIVA)
+       ========================================================================= -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 mobile-bottom-nav">
+    <div class="grid grid-cols-5 h-14">
+      <button data-tab="general" class="mobile-tab-btn flex flex-col items-center justify-center text-[10px] text-[#006a58] font-bold">
+        <i data-lucide="layout-grid" class="w-4 h-4 mb-0.5"></i>
+        <span>Inicio</span>
+      </button>
+      <button data-tab="pinto" class="mobile-tab-btn flex flex-col items-center justify-center text-[10px] text-slate-500">
+        <i data-lucide="landmark" class="w-4 h-4 mb-0.5"></i>
+        <span>Pinto</span>
+      </button>
+      <button data-tab="teneria" class="mobile-tab-btn flex flex-col items-center justify-center text-[10px] text-slate-500">
+        <i data-lucide="home" class="w-4 h-4 mb-0.5"></i>
+        <span>Tenería</span>
+      </button>
+      <button data-tab="ies-calderon" class="mobile-tab-btn flex flex-col items-center justify-center text-[10px] text-slate-500">
+        <i data-lucide="graduation-cap" class="w-4 h-4 mb-0.5"></i>
+        <span>IES</span>
+      </button>
+      <button data-tab="gastronomia" class="mobile-tab-btn flex flex-col items-center justify-center text-[10px] text-slate-500">
+        <i data-lucide="utensils" class="w-4 h-4 mb-0.5"></i>
+        <span>Gastro</span>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- =========================================================================
+       MODAL DE BÚSQUEDA GLOBAL
+       ========================================================================= -->
+  <div id="search-modal" class="fixed inset-0 stitch-modal-backdrop z-50 hidden items-start justify-center p-4 sm:p-6 pt-16 sm:pt-24">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 animate-fadeIn">
+      <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+        <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
+        <input type="text" id="search-input" placeholder="Buscar monumentos, historia, IES, rutas, locales..." class="w-full text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none">
+        <button id="close-search-btn" class="p-1 rounded text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="search-results" class="max-h-96 overflow-y-auto p-2"></div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       MODAL DE DETALLES EXTENDIDOS
+       ========================================================================= -->
+  <div id="detail-modal" class="fixed inset-0 stitch-modal-backdrop z-50 hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-slate-200 relative animate-fadeIn">
+      <button id="close-detail-btn" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div id="detail-modal-body"></div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       MODAL COMPARADOR DE BOCETOS STITCH
+       ========================================================================= -->
+  <div id="stitch-preview-modal" class="fixed inset-0 stitch-modal-backdrop z-50 hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden border border-slate-200 relative max-h-[90vh] flex flex-col">
+      <div class="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div>
+          <h3 class="font-bold text-slate-900 text-sm">Boceto Original de Diseño (Google Stitch)</h3>
+          <p class="text-[11px] text-slate-500">Diseño de referencia correspondiente a la vista actual.</p>
+        </div>
+        <button id="close-stitch-preview" class="p-1 text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-4 overflow-y-auto flex-1 bg-slate-100 flex justify-center">
+        <img id="stitch-preview-img" src="assets/designs/page-1-guia-general.jpg" alt="Boceto Stitch" class="max-w-full h-auto shadow rounded">
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Scripts de la Aplicación -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/map.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+
+</body>
+</html>
